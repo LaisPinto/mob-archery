@@ -1,0 +1,4 @@
+enum RegisteredBy {
+  user,
+  spotter,
+}

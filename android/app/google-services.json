@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "635866350942",
+    "project_id": "mob-archery",
+    "storage_bucket": "mob-archery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635866350942:android:4f83376d2adaaa56cbbbcf",
+        "android_client_info": {
+          "package_name": "br.com.mobfeel.mobarchery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLwJSOF0xSQZc0DExePO-vCMNcYQvkIBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

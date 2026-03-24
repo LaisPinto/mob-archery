@@ -10,6 +10,7 @@ import 'package:mob_archery/auth/stores/auth_action.dart';
 import 'package:mob_archery/auth/stores/auth_state.dart';
 import 'package:mob_archery/core/component/app_snackbar.dart';
 import 'package:mob_archery/profile/enums/supported_language.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -111,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Use pelo menos 8 caracteres com letras e numeros',
+                          LocaleKeys.modules_auth_register_password_hint.tr(),
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: const Color(0xFF7C8AA5),
                               ),
@@ -144,8 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           onChanged: (value) {
                             setState(() => acceptedTerms = value ?? false);
                           },
-                          title: const Text(
-                            'Eu aceito os Termos de Uso e a Politica de Privacidade.',
+                          title: Text(
+                            LocaleKeys.modules_auth_register_terms_label.tr(),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -193,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     color: Colors.white,
                                   ),
                                 )
-                              : const Text('Criar minha conta'),
+                              : Text(LocaleKeys.modules_auth_register_create_button.tr()),
                         ),
                         if (localErrorMessage != null) ...[
                           const SizedBox(height: 12),

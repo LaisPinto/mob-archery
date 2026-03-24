@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
 import 'package:mob_archery/timer/stores/timer_action.dart';
 import 'package:mob_archery/timer/stores/timer_state.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
@@ -146,7 +148,7 @@ class TimerPage extends StatelessWidget {
                             foregroundColor: Colors.white,
                           ),
                           icon: const Icon(Icons.skip_next_rounded),
-                          label: const Text('Next End'),
+                          label: Text(LocaleKeys.modules_timer_main_next_end.tr()),
                         ),
                       ),
                     ],

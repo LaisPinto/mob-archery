@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/auth/stores/auth_action.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
 import 'package:mob_archery/profile/enums/measurement_unit.dart';
 import 'package:mob_archery/profile/enums/supported_language.dart';
@@ -110,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
       bottomNavigationBar: const AppBottomNavigation(currentIndex: 3),
       appBar: AppBar(
         leading: BackButton(onPressed: () => Modular.to.navigate('/home/')),
-        title: const Text('Perfil'),
+        title: Text(LocaleKeys.modules_profile_title.tr()),
         actions: [
           IconButton(
             onPressed: () => Modular.to.pushNamed('/accessibility/'),
@@ -123,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
           builder: (_) {
             final profile = profileState.profile.value;
             if (profile == null) {
-              return const Center(child: Text('Nenhum perfil encontrado'));
+              return Center(child: Text(LocaleKeys.modules_profile_errors_not_found.tr()));
             }
 
             return ListView(
@@ -155,9 +156,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                       ),
                       const SizedBox(height: 6),
-                      const Text(
-                        'Nivel: Arqueiro Intermediario',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.modules_profile_level_label.tr(),
+                        style: const TextStyle(
                           color: Color(0xFFFF5C00),
                           fontSize: 16,
                         ),
@@ -166,9 +167,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'CONFIGURACOES DO APP',
-                  style: TextStyle(
+                Text(
+                  LocaleKeys.modules_profile_app_settings_section.tr(),
+                  style: const TextStyle(
                     color: Color(0xFF7587A6),
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.8,
@@ -266,7 +267,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     backgroundColor: const Color(0xFFFF5C00),
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Salvar alteracoes'),
+                  child: Text(LocaleKeys.modules_profile_save_changes_button.tr()),
                 ),
                 const SizedBox(height: 16),
                 TextButton.icon(
@@ -275,9 +276,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     Modular.to.navigate('/auth/login');
                   },
                   icon: const Icon(Icons.logout_rounded, color: Color(0xFFFF4B4B)),
-                  label: const Text(
-                    'Sair da conta',
-                    style: TextStyle(
+                  label: Text(
+                    LocaleKeys.modules_profile_sign_out_button.tr(),
+                    style: const TextStyle(
                       color: Color(0xFFFF4B4B),
                       fontWeight: FontWeight.w700,
                     ),

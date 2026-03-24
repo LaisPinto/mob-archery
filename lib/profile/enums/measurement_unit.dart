@@ -13,9 +13,9 @@ extension MeasurementUnitExtension on MeasurementUnit {
   String label(BuildContext context) {
     switch (this) {
       case MeasurementUnit.meters:
-        return LocaleKeys.profile_unit_meters.tr();
+        return LocaleKeys.modules_profile_fields_units_meters.tr();
       case MeasurementUnit.yards:
-        return LocaleKeys.profile_unit_yards.tr();
+        return LocaleKeys.modules_profile_fields_units_yards.tr();
     }
   }
 }

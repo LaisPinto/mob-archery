@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,6 +9,7 @@ import 'package:mob_archery/auth/enums/auth_status.dart';
 import 'package:mob_archery/auth/stores/auth_action.dart';
 import 'package:mob_archery/auth/stores/auth_state.dart';
 import 'package:mob_archery/core/component/app_snackbar.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class EmailVerificationPage extends StatefulWidget {
   const EmailVerificationPage({super.key});
@@ -108,7 +110,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                 ),
                 const SizedBox(height: 28),
                 Text(
-                  'Verifique seu e-mail',
+                  LocaleKeys.modules_auth_verification_title.tr(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w800,
@@ -116,7 +118,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                 ),
                 const SizedBox(height: 14),
                 Text(
-                  'Enviamos um link de verificacao para o seu endereco de e-mail cadastrado. Por favor, verifique sua caixa de entrada.',
+                  LocaleKeys.modules_auth_verification_sent_message.tr(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: const Color(0xFF6B7A99),
@@ -142,7 +144,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                   onPressed: authState.isLoading.value
                       ? null
                       : () => Modular.to.navigate('/auth/login'),
-                  child: const Text('Voltar ao login'),
+                  child: Text(LocaleKeys.modules_auth_verification_back_to_login.tr()),
                 ),
                 const SizedBox(height: 24),
                 Center(
@@ -150,7 +152,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
-                        'Nao recebeu o e-mail?',
+                        LocaleKeys.modules_auth_verification_not_received.tr(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: const Color(0xFF7C8AA5),
                             ),
@@ -162,7 +164,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                         style: TextButton.styleFrom(
                           foregroundColor: const Color(0xFFFF5C00),
                         ),
-                        child: const Text('Reenviar link'),
+                        child: Text(LocaleKeys.modules_auth_verification_resend_link.tr()),
                       ),
                     ],
                   ),

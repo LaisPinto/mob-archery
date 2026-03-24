@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/timer/enums/timer_mode.dart';
 import 'package:mob_archery/timer/models/timer_config_model.dart';
 import 'package:mob_archery/timer/stores/timer_action.dart';
 import 'package:mob_archery/timer/stores/timer_state.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class TimerConfigPage extends StatefulWidget {
   const TimerConfigPage({super.key});
@@ -87,7 +89,7 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
           onPressed: Modular.to.pop,
           icon: const Icon(Icons.close_rounded),
         ),
-        title: const Text('Configurar Temporizador'),
+        title: Text(LocaleKeys.modules_timer_config_page_title.tr()),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 12),
@@ -115,9 +117,9 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'TOTAL DE FLECHAS',
-                    style: TextStyle(color: Colors.white, letterSpacing: 0.8),
+                  Text(
+                    LocaleKeys.modules_timer_config_total_arrows_label.tr(),
+                    style: const TextStyle(color: Colors.white, letterSpacing: 0.8),
                   ),
                   const SizedBox(height: 10),
                   RichText(
@@ -160,10 +162,10 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
             const SizedBox(height: 20),
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Series por Rodada',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    LocaleKeys.modules_timer_config_series_per_round.tr(),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
                 Text(
@@ -206,10 +208,10 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
             const SizedBox(height: 20),
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Flechas por Serie',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    LocaleKeys.modules_timer_config_arrows_per_series.tr(),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
                 Text(
@@ -242,18 +244,18 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
               ),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Alternar Atiradores (AB/CD)',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                          LocaleKeys.modules_timer_config_alternate_shooters.tr(),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
-                          'Troca automatica entre duplas',
-                          style: TextStyle(color: Color(0xFF6B7A99)),
+                          LocaleKeys.modules_timer_config_alternate_shooters_desc.tr(),
+                          style: const TextStyle(color: Color(0xFF6B7A99)),
                         ),
                       ],
                     ),
@@ -268,9 +270,9 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Predefinicoes de Tempo',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            Text(
+              LocaleKeys.modules_timer_config_time_presets.tr(),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 14),
             _presetCard(
@@ -326,7 +328,7 @@ class _TimerConfigPageState extends State<TimerConfigPage> {
                 backgroundColor: const Color(0xFFFF5C00),
                 foregroundColor: Colors.white,
               ),
-              child: const Text('INICIAR TEMPORIZADOR'),
+              child: Text(LocaleKeys.modules_timer_config_start_button.tr()),
             ),
           ],
         ),

@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            hintText: LocaleKeys.auth_email_label.tr(),
+                            hintText: LocaleKeys.modules_auth_login_email_label.tr(),
                           ),
                         ),
                         const SizedBox(height: 14),
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
-                            hintText: LocaleKeys.auth_password_label.tr(),
+                            hintText: LocaleKeys.modules_auth_login_password_label.tr(),
                           ),
                         ),
                         const SizedBox(height: 14),
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                               foregroundColor: const Color(0xFFFF5C00),
                               padding: EdgeInsets.zero,
                             ),
-                            child: Text(LocaleKeys.auth_forgot_password_button.tr()),
+                            child: Text(LocaleKeys.modules_auth_forgot_password_button.tr()),
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                                     color: Colors.white,
                                   ),
                                 )
-                              : Text(LocaleKeys.auth_login_button.tr()),
+                              : Text(LocaleKeys.modules_auth_login_button.tr()),
                         ),
                         const SizedBox(height: 18),
                         Row(

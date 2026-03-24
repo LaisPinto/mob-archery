@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -6,6 +7,7 @@ import 'package:mob_archery/training/enums/bow_type.dart';
 import 'package:mob_archery/training/enums/registered_by.dart';
 import 'package:mob_archery/training/stores/training_action.dart';
 import 'package:mob_archery/training/stores/training_state.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class RegisterEndPage extends StatefulWidget {
   const RegisterEndPage({
@@ -144,7 +146,7 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: Modular.to.pop),
-        title: const Text('Registrar End'),
+        title: Text(LocaleKeys.modules_training_register_title.tr()),
       ),
       body: SafeArea(
         child: Observer(
@@ -179,9 +181,9 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
                             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 4),
-                          const Text(
-                            'Editar contexto',
-                            style: TextStyle(color: Color(0xFFFF5C00)),
+                          Text(
+                            LocaleKeys.modules_training_register_edit_context.tr(),
+                            style: const TextStyle(color: Color(0xFFFF5C00)),
                           ),
                         ],
                       ),
@@ -201,9 +203,9 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'SCORES SELECIONADOS',
-                style: TextStyle(
+              Text(
+                LocaleKeys.modules_training_register_selected_scores.tr(),
+                style: const TextStyle(
                   color: Color(0xFF7587A6),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1,
@@ -245,17 +247,17 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
                   children: [
                     const Icon(Icons.remove_red_eye_outlined, color: Color(0xFFFF5C00)),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Registro por Spotter',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                            LocaleKeys.modules_training_register_spotter_toggle_title.tr(),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                           ),
                           Text(
-                            'Marque se outra pessoa estiver anotando',
-                            style: TextStyle(color: Color(0xFF6B7A99)),
+                            LocaleKeys.modules_training_register_spotter_toggle_desc.tr(),
+                            style: const TextStyle(color: Color(0xFF6B7A99)),
                           ),
                         ],
                       ),
@@ -390,7 +392,7 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
                         backgroundColor: const Color(0xFFFF5C00),
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text('Salvar End'),
+                      child: Text(LocaleKeys.modules_training_register_save_button.tr()),
                     ),
                   ),
                 ],

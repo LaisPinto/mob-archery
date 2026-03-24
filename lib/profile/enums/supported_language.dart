@@ -28,11 +28,11 @@ extension SupportedLanguageExtension on SupportedLanguage {
   String label(BuildContext context) {
     switch (this) {
       case SupportedLanguage.englishUs:
-        return LocaleKeys.profile_language_english.tr();
+        return LocaleKeys.modules_profile_fields_language_options_en.tr();
       case SupportedLanguage.portugueseBrazil:
-        return LocaleKeys.profile_language_portuguese.tr();
+        return LocaleKeys.modules_profile_fields_language_options_pt.tr();
       case SupportedLanguage.spanishSpain:
-        return LocaleKeys.profile_language_spanish.tr();
+        return LocaleKeys.modules_profile_fields_language_options_es.tr();
     }
   }
 

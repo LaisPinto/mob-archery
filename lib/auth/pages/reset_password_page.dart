@@ -1,14 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/auth/stores/auth_action.dart';
 import 'package:mob_archery/auth/stores/auth_state.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({
-    super.key,
-    this.actionCode,
-  });
+  const ResetPasswordPage({super.key, this.actionCode});
 
   final String? actionCode;
 
@@ -63,10 +62,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             color: enabled ? Colors.green : const Color(0xFF8A96AD),
           ),
           const SizedBox(width: 8),
-          Text(
-            label,
-            style: const TextStyle(color: Color(0xFF6B7A99)),
-          ),
+          Text(label, style: const TextStyle(color: Color(0xFF6B7A99))),
         ],
       ),
     );
@@ -86,19 +82,19 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Nova Senha',
+                  LocaleKeys.modules_auth_reset_password_page_title.tr(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Sua nova senha deve ser unica para proteger sua conta de arqueiro.',
+                  LocaleKeys.modules_auth_reset_password_description.tr(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: const Color(0xFF6B7A99),
-                      ),
+                    color: const Color(0xFF6B7A99),
+                  ),
                 ),
                 const SizedBox(height: 24),
                 TextField(
@@ -116,7 +112,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 TextField(
                   controller: confirmPasswordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: 'Confirme a nova senha'),
+                  decoration: const InputDecoration(
+                    hintText: 'Confirme a nova senha',
+                  ),
                 ),
                 const SizedBox(height: 18),
                 Container(
@@ -130,10 +128,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     children: [
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Text(
-                              'Forca da senha',
-                              style: TextStyle(fontWeight: FontWeight.w600),
+                              LocaleKeys
+                                  .modules_auth_reset_password_strength_label
+                                  .tr(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           Text(
@@ -154,8 +156,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         color: const Color(0xFFFF5C00),
                       ),
                       const SizedBox(height: 14),
-                      _requirement(password.length >= 8, 'Minimo de 8 caracteres'),
-                      _requirement(RegExp(r'[A-Z]').hasMatch(password), 'Pelo menos uma letra maiuscula'),
+                      _requirement(
+                        password.length >= 8,
+                        'Minimo de 8 caracteres',
+                      ),
+                      _requirement(
+                        RegExp(r'[A-Z]').hasMatch(password),
+                        'Pelo menos uma letra maiuscula',
+                      ),
                       _requirement(
                         RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(password),
                         'Um caractere especial (@, #, !, %)',
@@ -168,7 +176,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   onPressed: authState.isLoading.value
                       ? null
                       : () async {
-                          if (passwordController.text != confirmPasswordController.text) {
+                          if (passwordController.text !=
+                              confirmPasswordController.text) {
                             setState(() {
                               localErrorMessage = 'As senhas nao coincidem.';
                             });
@@ -184,16 +193,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     backgroundColor: const Color(0xFFFF5C00),
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('REDEFINIR SENHA'),
+                  child: Text(
+                    LocaleKeys.modules_auth_reset_password_submit_button.tr(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextButton(
                   onPressed: () => Modular.to.navigate('/auth/login'),
-                  child: const Text('Cancelar e voltar ao login'),
+                  child: Text(
+                    LocaleKeys.modules_auth_reset_password_cancel_button.tr(),
+                  ),
                 ),
                 if (localErrorMessage != null) ...[
                   const SizedBox(height: 8),
-                  Text(localErrorMessage!, style: const TextStyle(color: Colors.red)),
+                  Text(
+                    localErrorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 ],
               ],
             ),

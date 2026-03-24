@@ -38,7 +38,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage> {
     final dateFormat = DateFormat.yMMMd(context.locale.toString());
 
     return Scaffold(
-      appBar: AppBar(title: Text(LocaleKeys.training_detail_title.tr())),
+      appBar: AppBar(title: Text(LocaleKeys.modules_training_details_title.tr())),
       body: SafeArea(
         child: Observer(
           builder: (_) => ListView(
@@ -54,26 +54,26 @@ class _TrainingDetailPageState extends State<TrainingDetailPage> {
                 runSpacing: 8,
                 children: [
                   SessionMetricChip(
-                    label: LocaleKeys.training_average.tr(),
+                    label: LocaleKeys.modules_training_details_average.tr(),
                     value: widget.session.averageScore.toStringAsFixed(2),
                   ),
                   SessionMetricChip(
-                    label: LocaleKeys.training_total_arrows.tr(),
+                    label: LocaleKeys.modules_training_details_total_arrows.tr(),
                     value: '${widget.session.totalArrows}',
                   ),
                   SessionMetricChip(
-                    label: LocaleKeys.training_x_count.tr(),
+                    label: LocaleKeys.modules_training_details_x_count.tr(),
                     value: '${widget.session.xCount}',
                   ),
                   SessionMetricChip(
-                    label: LocaleKeys.training_ten_count.tr(),
+                    label: LocaleKeys.modules_training_details_ten_count.tr(),
                     value: '${widget.session.tenCount}',
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               Text(
-                LocaleKeys.training_ends.tr(),
+                LocaleKeys.modules_training_details_ends.tr(),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
@@ -82,7 +82,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage> {
                   child: ListTile(
                     title: Text(end.arrows.join(' - ')),
                     subtitle: Text(
-                      LocaleKeys.training_detail_end_summary.tr(
+                      LocaleKeys.modules_training_details_end_summary.tr(
                         args: [
                           end.averageScore.toStringAsFixed(2),
                           end.distance.toStringAsFixed(0),

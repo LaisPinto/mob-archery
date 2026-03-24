@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,6 +8,7 @@ import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
 import 'package:mob_archery/home/services/home_summary_service.dart';
 import 'package:mob_archery/training/stores/training_action.dart';
 import 'package:mob_archery/training/stores/training_state.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -101,9 +103,9 @@ class _HomePageState extends State<HomePage> {
                             color: const Color(0xFFE1E6EF),
                             borderRadius: BorderRadius.circular(999),
                           ),
-                          child: const Text(
-                            'EM BREVE',
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.modules_home_dashboard_coming_soon.tr(),
+                            style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF7E8DA8),
@@ -145,16 +147,16 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           Row(
-            children: const [
+            children: [
               Expanded(
                 child: Text(
-                  'Progresso Semanal',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  LocaleKeys.modules_home_dashboard_weekly_progress.tr(),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
               ),
               Text(
-                'Ver tudo',
-                style: TextStyle(
+                LocaleKeys.modules_home_dashboard_see_all.tr(),
+                style: const TextStyle(
                   color: Color(0xFFFF5C00),
                   fontWeight: FontWeight.w700,
                 ),
@@ -236,9 +238,9 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Bem-vinda de volta',
-                            style: TextStyle(color: Color(0xFF7C8AA5)),
+                          Text(
+                            LocaleKeys.modules_home_dashboard_welcome_back.tr(),
+                            style: const TextStyle(color: Color(0xFF7C8AA5)),
                           ),
                           Text(
                             'Ola, $userName',
@@ -270,9 +272,9 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'STATUS DO DIA',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.modules_home_dashboard_day_status.tr(),
+                        style: const TextStyle(
                           color: Color(0xFFFF5C00),
                           fontWeight: FontWeight.w800,
                           letterSpacing: 0.6,
@@ -329,9 +331,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 22),
-                const Text(
-                  'Acesso Rapido',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                Text(
+                  LocaleKeys.modules_home_dashboard_quick_access.tr(),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: 14),
                 _quickAction(

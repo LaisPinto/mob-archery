@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -5,6 +6,7 @@ import 'package:mob_archery/accessibility/stores/accessibility_action.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
 import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
 import 'package:mob_archery/timer/stores/timer_action.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class AccessibilityPage extends StatelessWidget {
   const AccessibilityPage({super.key});
@@ -61,26 +63,26 @@ class AccessibilityPage extends StatelessWidget {
       bottomNavigationBar: const AppBottomNavigation(currentIndex: 0),
       appBar: AppBar(
         leading: BackButton(onPressed: () => Modular.to.navigate('/home/')),
-        title: const Text('Acessibilidade'),
+        title: Text(LocaleKeys.modules_accessibility_title.tr()),
       ),
       body: SafeArea(
         child: Observer(
           builder: (_) => ListView(
             padding: const EdgeInsets.all(18),
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Personalize o app para o seu conforto.',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                      LocaleKeys.modules_accessibility_personalize_title.tr(),
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
-                      'Todas as acoes possuem botoes visiveis e areas de toque ampliadas.',
-                      style: TextStyle(color: Color(0xFF6B7A99), height: 1.45),
+                      LocaleKeys.modules_accessibility_personalize_subtitle.tr(),
+                      style: const TextStyle(color: Color(0xFF6B7A99), height: 1.45),
                     ),
                   ],
                 ),
@@ -96,13 +98,13 @@ class AccessibilityPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.text_fields_rounded, color: Color(0xFFFF5C00)),
-                        SizedBox(width: 10),
+                        const Icon(Icons.text_fields_rounded, color: Color(0xFFFF5C00)),
+                        const SizedBox(width: 10),
                         Text(
-                          'Tamanho do texto',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                          LocaleKeys.modules_accessibility_text_size_label.tr(),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
@@ -126,18 +128,18 @@ class AccessibilityPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Text(
-                      'Ajuste o tamanho para leitura dinamica (Dynamic Type)',
+                    Text(
+                      LocaleKeys.modules_accessibility_text_size_hint.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xFF6B7A99)),
+                      style: const TextStyle(color: Color(0xFF6B7A99)),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'VISUAL & INTERACAO',
-                style: TextStyle(
+              Text(
+                LocaleKeys.modules_accessibility_section_visual.tr(),
+                style: const TextStyle(
                   color: Color(0xFF7587A6),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.8,
@@ -151,9 +153,9 @@ class AccessibilityPage extends StatelessWidget {
                 onChanged: accessibilityAction.toggleHighContrast,
               ),
               const SizedBox(height: 16),
-              const Text(
-                'SINAIS DE ALERTA',
-                style: TextStyle(
+              Text(
+                LocaleKeys.modules_accessibility_section_alerts.tr(),
+                style: const TextStyle(
                   color: Color(0xFF7587A6),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.8,
@@ -184,9 +186,9 @@ class AccessibilityPage extends StatelessWidget {
                 icon: Icons.flash_on_outlined,
               ),
               const SizedBox(height: 16),
-              const Text(
-                'TEMPO DE REACAO',
-                style: TextStyle(
+              Text(
+                LocaleKeys.modules_accessibility_section_reaction.tr(),
+                style: const TextStyle(
                   color: Color(0xFF7587A6),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.8,

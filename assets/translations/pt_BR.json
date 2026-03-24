@@ -1,108 +1,241 @@
 {
-  "auth_login_title": "Boas-vindas de volta",
-  "auth_login_subtitle": "Entre para manter seu treino focado e pronto para competição.",
-  "auth_email_label": "E-mail",
-  "auth_password_label": "Senha",
-  "auth_login_button": "Entrar",
-  "auth_register_button": "Criar conta",
-  "auth_forgot_password_button": "Esqueceu a senha?",
-  "auth_register_title": "Crie sua conta",
-  "auth_register_subtitle": "Configure seu perfil de atleta e sincronize seu histórico de treinos.",
-  "auth_name_label": "Nome",
-  "auth_confirm_password_label": "Confirmar senha",
-  "auth_back_to_login_button": "Voltar para entrar",
-  "auth_forgot_password_title": "Recuperar senha",
-  "auth_forgot_password_message": "Digite seu e-mail e enviaremos um link de redefinição.",
-  "auth_send_reset_button": "Enviar e-mail de redefinição",
-  "auth_email_verification_title": "Verifique seu e-mail",
-  "auth_email_verification_message": "Confirme seu e-mail antes de entrar no app.",
-  "auth_resend_verification_button": "Reenviar e-mail de verificação",
-  "auth_email_verification_check_button": "Já verifiquei meu e-mail",
-  "auth_reset_password_title": "Redefinir senha",
-  "auth_reset_password_message": "Cole o código recebido por e-mail e defina uma nova senha.",
-  "auth_reset_password_code_label": "Código de ação",
-  "auth_reset_password_button": "Atualizar senha",
-  "auth_logout_button": "Sair",
-  "home_title": "Painel",
-  "home_greeting": "Bom treino, {}",
-  "home_greeting_fallback": "arqueiro",
-  "home_subtitle": "Acesso rápido ao timer, registro de pontuação e recursos de acessibilidade.",
-  "home_summary_sessions": "Sessões",
-  "home_summary_arrows": "Flechas",
-  "home_summary_average": "Média",
-  "home_summary_x_count": "Contagem de X",
-  "home_timer_title": "Timer de competição",
-  "home_timer_subtitle": "Configure a contagem regressiva para 3 ou 6 flechas.",
-  "home_register_end_title": "Registrar end",
-  "home_register_end_subtitle": "Capture flechas e métricas direto da linha de tiro.",
-  "home_spotter_title": "Modo spotter",
-  "home_spotter_subtitle": "Permita que outra pessoa registre o end com fluxo acessível.",
-  "home_history_title": "Histórico de treino",
-  "home_history_subtitle": "Revise sessões, médias, X e contagem de 10.",
-  "home_accessibility_title": "Acessibilidade",
-  "home_accessibility_subtitle": "Ajuste contraste, assistência do timer e feedback multimodal.",
-  "home_profile_title": "Perfil",
-  "home_profile_subtitle": "Atualize identidade do atleta, idioma e unidade de medida.",
-  "timer_title": "Timer",
-  "timer_config_button": "Configurar",
-  "timer_countdown_label": "Tempo restante",
-  "timer_number_of_arrows": "Flechas",
-  "timer_mode_label": "Modo",
-  "timer_mode_competition": "Regras de competição",
-  "timer_mode_per_arrow": "30 segundos por flecha",
-  "timer_accessibility_mode": "Timer acessível",
-  "timer_accessibility_description": "Adiciona 10 segundos extras para cada flecha.",
-  "timer_accessible_enabled": "Ativado",
-  "timer_accessible_disabled": "Desativado",
-  "timer_total_duration": "Duração total",
-  "timer_start_button": "Iniciar",
-  "timer_pause_button": "Pausar",
-  "timer_reset_button": "Reiniciar",
-  "timer_config_title": "Configurações do timer",
-  "timer_config_done_button": "Aplicar configurações",
-  "training_register_end_title": "Registrar end",
-  "training_distance_label": "Distância",
-  "training_bow_type_label": "Tipo de arco",
-  "training_spotter_name_label": "Nome do spotter",
-  "training_registered_by_user": "Atleta",
-  "training_registered_by_spotter": "Spotter",
-  "training_save_end_button": "Salvar end",
-  "training_spotter_title": "Modo spotter",
-  "training_spotter_description": "Use esta tela quando outra pessoa estiver registrando o end para o atleta.",
-  "training_spotter_start_button": "Iniciar registro com spotter",
-  "training_history_title": "Histórico de treino",
-  "training_no_sessions": "Nenhuma sessão de treino encontrada ainda.",
-  "training_history_session_summary": "{} flechas • média {}",
-  "training_detail_title": "Detalhe do treino",
-  "training_average": "Média",
-  "training_total_arrows": "Total de flechas",
-  "training_x_count": "Contagem de X",
-  "training_ten_count": "Contagem de 10",
-  "training_ends": "Ends",
-  "training_detail_end_summary": "Média {} • {} m • {}",
-  "accessibility_title": "Acessibilidade",
-  "accessibility_high_contrast": "Tema de alto contraste",
-  "accessibility_high_contrast_description": "Aumenta o contraste e a separação visual dos elementos.",
-  "accessibility_timer_mode": "Modo de timer acessível",
-  "accessibility_timer_mode_description": "Adiciona tempo extra por flecha de acordo com as regras.",
-  "accessibility_announcements_title": "Anúncios para leitor de tela",
-  "accessibility_announcements_subtitle": "Anuncia mudanças importantes, como o término do timer.",
-  "accessibility_haptic_title": "Feedback tátil",
-  "accessibility_haptic_subtitle": "Reforça ações críticas com vibração.",
-  "profile_title": "Perfil",
-  "profile_no_user": "Nenhum perfil de usuário disponível.",
-  "profile_name_label": "Nome",
-  "profile_name_subtitle": "Esse nome aparece no seu perfil de atleta.",
-  "profile_email": "E-mail",
-  "profile_email_subtitle": "Seu e-mail de acesso vem do Firebase Authentication.",
-  "profile_language_label": "Idioma preferido",
-  "profile_language_subtitle": "Escolha o idioma do app para navegação e telas de pontuação.",
-  "profile_language_english": "Inglês (EUA)",
-  "profile_language_portuguese": "Português (Brasil)",
-  "profile_language_spanish": "Espanhol (Espanha)",
-  "profile_unit_label": "Unidade de distância",
-  "profile_unit_subtitle": "Defina como as distâncias em campo serão representadas.",
-  "profile_unit_meters": "Metros",
-  "profile_unit_yards": "Jardas",
-  "profile_save_button": "Salvar perfil"
+  "modules": {
+    "auth": {
+      "login": {
+        "title": "Boas-vindas de volta",
+        "subtitle": "Entre para manter seu treino focado e pronto para competição.",
+        "email_label": "E-mail",
+        "password_label": "Senha",
+        "button": "Entrar"
+      },
+      "register": {
+        "title": "Crie sua conta",
+        "subtitle": "Configure seu perfil de atleta e sincronize seu histórico de treinos.",
+        "name_label": "Nome",
+        "confirm_password_label": "Confirmar senha",
+        "button": "Criar conta",
+        "back_to_login": "Voltar para entrar",
+        "password_hint": "Use pelo menos 8 caracteres com letras e numeros",
+        "terms_label": "Eu aceito os Termos de Uso e a Politica de Privacidade.",
+        "create_button": "Criar minha conta"
+      },
+      "forgot_password": {
+        "title": "Recuperar senha",
+        "message": "Digite seu e-mail e enviaremos um link de redefinição.",
+        "button": "Esqueceu a senha?",
+        "send_reset_button": "Enviar e-mail de redefinição",
+        "page_title": "Esqueceu sua senha?",
+        "description": "Nao se preocupe, acontece com os melhores arqueiros. Insira seu e-mail abaixo e enviaremos as instrucoes para redefinir sua senha.",
+        "email_section_label": "E-MAIL CADASTRADO",
+        "send_link_button": "Enviar Link de Recuperacao"
+      },
+      "verification": {
+        "title": "Verifique seu e-mail",
+        "message": "Confirme seu e-mail antes de entrar no app.",
+        "resend_button": "Reenviar e-mail de verificação",
+        "check_button": "Já verifiquei meu e-mail",
+        "sent_message": "Enviamos um link de verificacao para o seu endereco de e-mail cadastrado. Por favor, verifique sua caixa de entrada.",
+        "back_to_login": "Voltar ao login",
+        "not_received": "Nao recebeu o e-mail?",
+        "resend_link": "Reenviar link"
+      },
+      "reset_password": {
+        "title": "Redefinir senha",
+        "message": "Cole o código recebido por e-mail e defina uma nova senha.",
+        "code_label": "Código de ação",
+        "button": "Atualizar senha",
+        "page_title": "Nova Senha",
+        "description": "Sua nova senha deve ser unica para proteger sua conta de arqueiro.",
+        "strength_label": "Forca da senha",
+        "submit_button": "REDEFINIR SENHA",
+        "cancel_button": "Cancelar e voltar ao login"
+      },
+      "logout_button": "Sair"
+    },
+    "home": {
+      "dashboard": {
+        "title": "Painel",
+        "greeting": "Bom treino, {}",
+        "greeting_fallback": "arqueiro",
+        "subtitle": "Acesso rápido ao timer, registro de pontuação e recursos de acessibilidade.",
+        "coming_soon": "EM BREVE",
+        "weekly_progress": "Progresso Semanal",
+        "see_all": "Ver tudo",
+        "welcome_back": "Bem-vinda de volta",
+        "day_status": "STATUS DO DIA",
+        "quick_access": "Acesso Rapido"
+      },
+      "summary": {
+        "sessions": "Sessões",
+        "arrows": "Flechas",
+        "average": "Média",
+        "x_count": "Contagem de X"
+      },
+      "shortcuts": {
+        "timer": {
+          "title": "Timer de competição",
+          "subtitle": "Configure a contagem regressiva para 3 ou 6 flechas."
+        },
+        "register_end": {
+          "title": "Registrar end",
+          "subtitle": "Capture flechas e métricas direto da linha de tiro."
+        },
+        "spotter": {
+          "title": "Modo spotter",
+          "subtitle": "Permita que outra pessoa registre o end com fluxo acessível."
+        },
+        "history": {
+          "title": "Histórico de treino",
+          "subtitle": "Revise sessões, médias, X e contagem de 10."
+        },
+        "accessibility": {
+          "title": "Acessibilidade",
+          "subtitle": "Ajuste contraste, assistência do timer e feedback multimodal."
+        },
+        "profile": {
+          "title": "Perfil",
+          "subtitle": "Atualize identidade do atleta, idioma e unidade de medida."
+        }
+      }
+    },
+    "timer": {
+      "main": {
+        "title": "Timer",
+        "config_button": "Configurar",
+        "countdown_label": "Tempo restante",
+        "arrows_label": "Flechas",
+        "mode_label": "Modo",
+        "start": "Iniciar",
+        "pause": "Pausar",
+        "reset": "Reiniciar",
+        "next_end": "Proximo End"
+      },
+      "modes": {
+        "competition": "Regras de competição",
+        "per_arrow": "30 segundos por flecha"
+      },
+      "accessibility": {
+        "title": "Timer acessível",
+        "description": "Adiciona 10 segundos extras para cada flecha.",
+        "enabled": "Ativado",
+        "disabled": "Desativado"
+      },
+      "config": {
+        "title": "Configurações do timer",
+        "apply_button": "Aplicar configurações",
+        "total_duration": "Duração total",
+        "page_title": "Configurar Temporizador",
+        "total_arrows_label": "TOTAL DE FLECHAS",
+        "series_per_round": "Series por Rodada",
+        "arrows_per_series": "Flechas por Serie",
+        "alternate_shooters": "Alternar Atiradores (AB/CD)",
+        "alternate_shooters_desc": "Troca automatica entre duplas",
+        "time_presets": "Predefinicoes de Tempo",
+        "start_button": "INICIAR TEMPORIZADOR"
+      }
+    },
+    "training": {
+      "register": {
+        "title": "Registrar end",
+        "distance": "Distância",
+        "bow_type": "Tipo de arco",
+        "spotter_name": "Nome do spotter",
+        "by_user": "Atleta",
+        "by_spotter": "Spotter",
+        "save_button": "Salvar end",
+        "selected_scores": "SCORES SELECIONADOS",
+        "edit_context": "Editar contexto",
+        "spotter_toggle_title": "Registro por Spotter",
+        "spotter_toggle_desc": "Marque se outra pessoa estiver anotando"
+      },
+      "spotter_mode": {
+        "title": "Modo spotter",
+        "description": "Use esta tela quando outra pessoa estiver registrando o end para o atleta.",
+        "start_button": "Iniciar registro com spotter",
+        "page_title": "Registro do Spotter",
+        "info_title": "Informacoes do Registro",
+        "info_subtitle": "Confirme os detalhes da operacao assistida",
+        "active_label": "O auxilio por spotter esta ativado",
+        "responsible_name": "Nome do Spotter Responsavel",
+        "finish_button": "Finalizar Registro"
+      },
+      "history": {
+        "title": "Histórico de treino",
+        "empty": "Nenhuma sessão de treino encontrada ainda.",
+        "summary_label": "{} flechas • média {}"
+      },
+      "details": {
+        "title": "Detalhe do treino",
+        "average": "Média",
+        "total_arrows": "Total de flechas",
+        "x_count": "Contagem de X",
+        "ten_count": "Contagem de 10",
+        "ends": "Ends",
+        "end_summary": "Média {} • {} m • {}"
+      }
+    },
+    "accessibility": {
+      "title": "Acessibilidade",
+      "high_contrast": {
+        "label": "Tema de alto contraste",
+        "description": "Aumenta o contraste e a separação visual dos elementos."
+      },
+      "timer_mode": {
+        "label": "Modo de timer acessível",
+        "description": "Adiciona tempo extra por flecha de acordo com as regras."
+      },
+      "announcements": {
+        "title": "Anúncios para leitor de tela",
+        "subtitle": "Anuncia mudanças importantes, como o término do timer."
+      },
+      "haptic": {
+        "title": "Feedback tátil",
+        "subtitle": "Reforça ações críticas com vibração."
+      },
+      "personalize_title": "Personalize o app para o seu conforto.",
+      "personalize_subtitle": "Todas as acoes possuem botoes visiveis e areas de toque ampliadas.",
+      "text_size_label": "Tamanho do texto",
+      "text_size_hint": "Ajuste o tamanho para leitura dinamica (Dynamic Type)",
+      "section_visual": "VISUAL & INTERACAO",
+      "section_alerts": "SINAIS DE ALERTA",
+      "section_reaction": "TEMPO DE REACAO"
+    },
+    "profile": {
+      "title": "Perfil",
+      "errors": {
+        "no_user": "Nenhum perfil de usuário disponível.",
+        "not_found": "Nenhum perfil encontrado"
+      },
+      "fields": {
+        "name": {
+          "label": "Nome",
+          "subtitle": "Esse nome aparece no seu perfil de atleta."
+        },
+        "email": {
+          "label": "E-mail",
+          "subtitle": "Seu e-mail de acesso vem do Firebase Authentication."
+        },
+        "language": {
+          "label": "Idioma preferido",
+          "subtitle": "Escolha o idioma do app para navegação e telas de pontuação.",
+          "options": {
+            "en": "Inglês (EUA)",
+            "pt": "Português (Brasil)",
+            "es": "Espanhol (Espanha)"
+          }
+        },
+        "units": {
+          "label": "Unidade de distância",
+          "subtitle": "Defina como as distâncias em campo serão representadas.",
+          "meters": "Metros",
+          "yards": "Jardas"
+        }
+      },
+      "save_button": "Salvar perfil",
+      "level_label": "Nivel: Arqueiro Intermediario",
+      "app_settings_section": "CONFIGURACOES DO APP",
+      "save_changes_button": "Salvar alteracoes",
+      "sign_out_button": "Sair da conta"
+    }
+  }
 }

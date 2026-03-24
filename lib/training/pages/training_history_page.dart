@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -5,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
 import 'package:mob_archery/training/stores/training_action.dart';
 import 'package:mob_archery/training/stores/training_state.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class TrainingHistoryPage extends StatefulWidget {
   const TrainingHistoryPage({super.key});
@@ -33,7 +35,7 @@ class _TrainingHistoryPageState extends State<TrainingHistoryPage> {
       bottomNavigationBar: const AppBottomNavigation(currentIndex: 1),
       appBar: AppBar(
         leading: BackButton(onPressed: () => Modular.to.navigate('/home/')),
-        title: const Text('Historico de Treinos'),
+        title: Text(LocaleKeys.modules_training_history_title.tr()),
       ),
       body: SafeArea(
         child: Observer(

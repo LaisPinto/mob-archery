@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/training/enums/registered_by.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class SpotterPage extends StatefulWidget {
   const SpotterPage({super.key});
@@ -29,7 +31,7 @@ class _SpotterPageState extends State<SpotterPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: Modular.to.pop),
-        title: const Text('Registro do Spotter'),
+        title: Text(LocaleKeys.modules_training_spotter_mode_page_title.tr()),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 14),
@@ -44,14 +46,14 @@ class _SpotterPageState extends State<SpotterPage> {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  const Text(
-                    'Informacoes do Registro',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                  Text(
+                    LocaleKeys.modules_training_spotter_mode_info_title.tr(),
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: 6),
-                  const Text(
-                    'Confirme os detalhes da operacao assistida',
-                    style: TextStyle(color: Color(0xFF6B7A99)),
+                  Text(
+                    LocaleKeys.modules_training_spotter_mode_info_subtitle.tr(),
+                    style: const TextStyle(color: Color(0xFF6B7A99)),
                   ),
                   const SizedBox(height: 18),
                   Container(
@@ -62,33 +64,33 @@ class _SpotterPageState extends State<SpotterPage> {
                       border: Border.all(color: const Color(0xFFFFD9C6)),
                     ),
                     child: Row(
-                      children: const [
-                        Icon(Icons.group_outlined, color: Color(0xFFFF5C00)),
-                        SizedBox(width: 12),
+                      children: [
+                        const Icon(Icons.group_outlined, color: Color(0xFFFF5C00)),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Registro por Spotter',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                                LocaleKeys.modules_training_register_spotter_toggle_title.tr(),
+                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
-                                'O auxilio por spotter esta ativado',
-                                style: TextStyle(color: Color(0xFF6B7A99)),
+                                LocaleKeys.modules_training_spotter_mode_active_label.tr(),
+                                style: const TextStyle(color: Color(0xFF6B7A99)),
                               ),
                             ],
                           ),
                         ),
-                        Switch(value: true, onChanged: null),
+                        const Switch(value: true, onChanged: null),
                       ],
                     ),
                   ),
                   const SizedBox(height: 22),
-                  const Text(
-                    'Nome do Spotter Responsavel',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  Text(
+                    LocaleKeys.modules_training_spotter_mode_responsible_name.tr(),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 10),
                   TextField(
@@ -116,7 +118,7 @@ class _SpotterPageState extends State<SpotterPage> {
                   backgroundColor: const Color(0xFFFF5C00),
                   foregroundColor: Colors.white,
                 ),
-                child: const Text('Finalizar Registro'),
+                child: Text(LocaleKeys.modules_training_spotter_mode_finish_button.tr()),
               ),
             ),
           ],

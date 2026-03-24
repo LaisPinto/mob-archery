@@ -1,108 +1,241 @@
 {
-  "auth_login_title": "Welcome back",
-  "auth_login_subtitle": "Sign in to keep your training focused and competition-ready.",
-  "auth_email_label": "Email",
-  "auth_password_label": "Password",
-  "auth_login_button": "Sign in",
-  "auth_register_button": "Create account",
-  "auth_forgot_password_button": "Forgot password?",
-  "auth_register_title": "Create your account",
-  "auth_register_subtitle": "Set up your athlete profile and sync your training history.",
-  "auth_name_label": "Name",
-  "auth_confirm_password_label": "Confirm password",
-  "auth_back_to_login_button": "Back to sign in",
-  "auth_forgot_password_title": "Recover password",
-  "auth_forgot_password_message": "Enter your email and we will send a reset link.",
-  "auth_send_reset_button": "Send reset email",
-  "auth_email_verification_title": "Verify your email",
-  "auth_email_verification_message": "Check your inbox and confirm your email before entering the app.",
-  "auth_resend_verification_button": "Resend verification email",
-  "auth_email_verification_check_button": "I already verified my email",
-  "auth_reset_password_title": "Reset password",
-  "auth_reset_password_message": "Paste the action code from the email and set a new password.",
-  "auth_reset_password_code_label": "Action code",
-  "auth_reset_password_button": "Update password",
-  "auth_logout_button": "Sign out",
-  "home_title": "Dashboard",
-  "home_greeting": "Good training, {}",
-  "home_greeting_fallback": "archer",
-  "home_subtitle": "Quick access to timer, scoring and accessibility settings.",
-  "home_summary_sessions": "Sessions",
-  "home_summary_arrows": "Arrows",
-  "home_summary_average": "Average",
-  "home_summary_x_count": "X count",
-  "home_timer_title": "Competition timer",
-  "home_timer_subtitle": "Configure countdown rules for 3 or 6 arrows.",
-  "home_register_end_title": "Register end",
-  "home_register_end_subtitle": "Capture arrows and metrics directly from the shooting line.",
-  "home_spotter_title": "Spotter mode",
-  "home_spotter_subtitle": "Let another person register your end with accessible flow.",
-  "home_history_title": "Training history",
-  "home_history_subtitle": "Review sessions, averages, X count and ten count.",
-  "home_accessibility_title": "Accessibility",
-  "home_accessibility_subtitle": "Adjust contrast, timer assistance and multimodal feedback.",
-  "home_profile_title": "Profile",
-  "home_profile_subtitle": "Update your athlete identity, language and unit preferences.",
-  "timer_title": "Timer",
-  "timer_config_button": "Configure",
-  "timer_countdown_label": "Remaining time",
-  "timer_number_of_arrows": "Arrows",
-  "timer_mode_label": "Mode",
-  "timer_mode_competition": "Competition rules",
-  "timer_mode_per_arrow": "30 seconds per arrow",
-  "timer_accessibility_mode": "Accessible timer",
-  "timer_accessibility_description": "Adds 10 extra seconds for each arrow.",
-  "timer_accessible_enabled": "Enabled",
-  "timer_accessible_disabled": "Disabled",
-  "timer_total_duration": "Total duration",
-  "timer_start_button": "Start",
-  "timer_pause_button": "Pause",
-  "timer_reset_button": "Reset",
-  "timer_config_title": "Timer settings",
-  "timer_config_done_button": "Apply settings",
-  "training_register_end_title": "Register end",
-  "training_distance_label": "Distance",
-  "training_bow_type_label": "Bow type",
-  "training_spotter_name_label": "Spotter name",
-  "training_registered_by_user": "Athlete",
-  "training_registered_by_spotter": "Spotter",
-  "training_save_end_button": "Save end",
-  "training_spotter_title": "Spotter mode",
-  "training_spotter_description": "Use this screen when someone else is recording the end for the athlete.",
-  "training_spotter_start_button": "Start spotter entry",
-  "training_history_title": "Training history",
-  "training_no_sessions": "No training sessions found yet.",
-  "training_history_session_summary": "{} arrows • average {}",
-  "training_detail_title": "Training detail",
-  "training_average": "Average",
-  "training_total_arrows": "Total arrows",
-  "training_x_count": "X count",
-  "training_ten_count": "Ten count",
-  "training_ends": "Ends",
-  "training_detail_end_summary": "Average {} • {} m • {}",
-  "accessibility_title": "Accessibility",
-  "accessibility_high_contrast": "High contrast theme",
-  "accessibility_high_contrast_description": "Increase color contrast and visual separation.",
-  "accessibility_timer_mode": "Accessible timer mode",
-  "accessibility_timer_mode_description": "Adds extra time to each arrow according to the rules.",
-  "accessibility_announcements_title": "Screen reader announcements",
-  "accessibility_announcements_subtitle": "Announce important changes like timer completion.",
-  "accessibility_haptic_title": "Haptic feedback",
-  "accessibility_haptic_subtitle": "Support time-critical actions with vibration feedback.",
-  "profile_title": "Profile",
-  "profile_no_user": "No user profile available.",
-  "profile_name_label": "Name",
-  "profile_name_subtitle": "This name is shown in your athlete profile.",
-  "profile_email": "Email",
-  "profile_email_subtitle": "Your sign-in email comes from Firebase Authentication.",
-  "profile_language_label": "Preferred language",
-  "profile_language_subtitle": "Choose the app language for navigation and scoring screens.",
-  "profile_language_english": "English (US)",
-  "profile_language_portuguese": "Portuguese (Brazil)",
-  "profile_language_spanish": "Spanish (Spain)",
-  "profile_unit_label": "Distance unit",
-  "profile_unit_subtitle": "Define how field distances are represented.",
-  "profile_unit_meters": "Meters",
-  "profile_unit_yards": "Yards",
-  "profile_save_button": "Save profile"
+  "modules": {
+    "auth": {
+      "login": {
+        "title": "Welcome back",
+        "subtitle": "Sign in to keep your training focused and competition-ready.",
+        "email_label": "Email",
+        "password_label": "Password",
+        "button": "Sign in"
+      },
+      "register": {
+        "title": "Create your account",
+        "subtitle": "Set up your athlete profile and sync your training history.",
+        "name_label": "Name",
+        "confirm_password_label": "Confirm password",
+        "button": "Create account",
+        "back_to_login": "Back to sign in",
+        "password_hint": "Use at least 8 characters with letters and numbers",
+        "terms_label": "I accept the Terms of Use and Privacy Policy.",
+        "create_button": "Create my account"
+      },
+      "forgot_password": {
+        "title": "Recover password",
+        "message": "Enter your email and we will send a reset link.",
+        "button": "Forgot password?",
+        "send_reset_button": "Send reset email",
+        "page_title": "Forgot your password?",
+        "description": "Don't worry, it happens to the best archers. Enter your email below and we'll send you instructions to reset your password.",
+        "email_section_label": "REGISTERED EMAIL",
+        "send_link_button": "Send Recovery Link"
+      },
+      "verification": {
+        "title": "Verify your email",
+        "message": "Check your inbox and confirm your email before entering the app.",
+        "resend_button": "Resend verification email",
+        "check_button": "I already verified my email",
+        "sent_message": "We sent a verification link to your registered email address. Please check your inbox.",
+        "back_to_login": "Back to login",
+        "not_received": "Didn't receive the email?",
+        "resend_link": "Resend link"
+      },
+      "reset_password": {
+        "title": "Reset password",
+        "message": "Paste the action code from the email and set a new password.",
+        "code_label": "Action code",
+        "button": "Update password",
+        "page_title": "New Password",
+        "description": "Your new password must be unique to protect your archer account.",
+        "strength_label": "Password strength",
+        "submit_button": "RESET PASSWORD",
+        "cancel_button": "Cancel and return to login"
+      },
+      "logout_button": "Sign out"
+    },
+    "home": {
+      "dashboard": {
+        "title": "Dashboard",
+        "greeting": "Good training, {}",
+        "greeting_fallback": "archer",
+        "subtitle": "Quick access to timer, scoring and accessibility settings.",
+        "coming_soon": "COMING SOON",
+        "weekly_progress": "Weekly Progress",
+        "see_all": "See all",
+        "welcome_back": "Welcome back",
+        "day_status": "DAY STATUS",
+        "quick_access": "Quick Access"
+      },
+      "summary": {
+        "sessions": "Sessions",
+        "arrows": "Arrows",
+        "average": "Average",
+        "x_count": "X count"
+      },
+      "shortcuts": {
+        "timer": {
+          "title": "Competition timer",
+          "subtitle": "Configure countdown rules for 3 or 6 arrows."
+        },
+        "register_end": {
+          "title": "Register end",
+          "subtitle": "Capture arrows and metrics directly from the shooting line."
+        },
+        "spotter": {
+          "title": "Spotter mode",
+          "subtitle": "Let another person register your end with accessible flow."
+        },
+        "history": {
+          "title": "Training history",
+          "subtitle": "Review sessions, averages, X count and ten count."
+        },
+        "accessibility": {
+          "title": "Accessibility",
+          "subtitle": "Adjust contrast, timer assistance and multimodal feedback."
+        },
+        "profile": {
+          "title": "Profile",
+          "subtitle": "Update your athlete identity, language and unit preferences."
+        }
+      }
+    },
+    "timer": {
+      "main": {
+        "title": "Timer",
+        "config_button": "Configure",
+        "countdown_label": "Remaining time",
+        "arrows_label": "Arrows",
+        "mode_label": "Mode",
+        "start": "Start",
+        "pause": "Pause",
+        "reset": "Reset",
+        "next_end": "Next End"
+      },
+      "modes": {
+        "competition": "Competition rules",
+        "per_arrow": "30 seconds per arrow"
+      },
+      "accessibility": {
+        "title": "Accessible timer",
+        "description": "Adds 10 extra seconds for each arrow.",
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "config": {
+        "title": "Timer settings",
+        "apply_button": "Apply settings",
+        "total_duration": "Total duration",
+        "page_title": "Configure Timer",
+        "total_arrows_label": "TOTAL ARROWS",
+        "series_per_round": "Series per Round",
+        "arrows_per_series": "Arrows per Series",
+        "alternate_shooters": "Alternate Shooters (AB/CD)",
+        "alternate_shooters_desc": "Automatic switch between pairs",
+        "time_presets": "Time Presets",
+        "start_button": "START TIMER"
+      }
+    },
+    "training": {
+      "register": {
+        "title": "Register end",
+        "distance": "Distance",
+        "bow_type": "Bow type",
+        "spotter_name": "Spotter name",
+        "by_user": "Athlete",
+        "by_spotter": "Spotter",
+        "save_button": "Save end",
+        "selected_scores": "SELECTED SCORES",
+        "edit_context": "Edit context",
+        "spotter_toggle_title": "Spotter Entry",
+        "spotter_toggle_desc": "Check if another person is scoring"
+      },
+      "spotter_mode": {
+        "title": "Spotter mode",
+        "description": "Use this screen when someone else is recording the end for the athlete.",
+        "start_button": "Start spotter entry",
+        "page_title": "Spotter Registration",
+        "info_title": "Registration Info",
+        "info_subtitle": "Confirm the details of the assisted operation",
+        "active_label": "Spotter assistance is active",
+        "responsible_name": "Responsible Spotter Name",
+        "finish_button": "Finish Registration"
+      },
+      "history": {
+        "title": "Training history",
+        "empty": "No training sessions found yet.",
+        "summary_label": "{} arrows • average {}"
+      },
+      "details": {
+        "title": "Training detail",
+        "average": "Average",
+        "total_arrows": "Total arrows",
+        "x_count": "X count",
+        "ten_count": "Ten count",
+        "ends": "Ends",
+        "end_summary": "Average {} • {} m • {}"
+      }
+    },
+    "accessibility": {
+      "title": "Accessibility",
+      "high_contrast": {
+        "label": "High contrast theme",
+        "description": "Increase color contrast and visual separation."
+      },
+      "timer_mode": {
+        "label": "Accessible timer mode",
+        "description": "Adds extra time to each arrow according to the rules."
+      },
+      "announcements": {
+        "title": "Screen reader announcements",
+        "subtitle": "Announce important changes like timer completion."
+      },
+      "haptic": {
+        "title": "Haptic feedback",
+        "subtitle": "Support time-critical actions with vibration feedback."
+      },
+      "personalize_title": "Personalize the app for your comfort.",
+      "personalize_subtitle": "All actions have visible buttons and extended touch areas.",
+      "text_size_label": "Text size",
+      "text_size_hint": "Adjust size for dynamic reading (Dynamic Type)",
+      "section_visual": "VISUAL & INTERACTION",
+      "section_alerts": "ALERT SIGNALS",
+      "section_reaction": "REACTION TIME"
+    },
+    "profile": {
+      "title": "Profile",
+      "errors": {
+        "no_user": "No user profile available.",
+        "not_found": "No profile found"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "subtitle": "This name is shown in your athlete profile."
+        },
+        "email": {
+          "label": "Email",
+          "subtitle": "Your sign-in email comes from Firebase Authentication."
+        },
+        "language": {
+          "label": "Preferred language",
+          "subtitle": "Choose the app language for navigation and scoring screens.",
+          "options": {
+            "en": "English (US)",
+            "pt": "Portuguese (Brazil)",
+            "es": "Spanish (Spain)"
+          }
+        },
+        "units": {
+          "label": "Distance unit",
+          "subtitle": "Define how field distances are represented.",
+          "meters": "Meters",
+          "yards": "Yards"
+        }
+      },
+      "save_button": "Save profile",
+      "level_label": "Level: Intermediate Archer",
+      "app_settings_section": "APP SETTINGS",
+      "save_changes_button": "Save changes",
+      "sign_out_button": "Sign out"
+    }
+  }
 }

@@ -1,14 +1,18 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mob_archery/auth/stores/auth_action.dart';
-import 'package:mob_archery/translations/locale_keys.g.dart';
+import 'package:mob_archery/core/component/app_snackbar.dart';
+import 'package:mob_archery/core/theme/custom_color_scheme.dart';
 import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
-import 'package:mob_archery/profile/enums/measurement_unit.dart';
 import 'package:mob_archery/profile/enums/supported_language.dart';
 import 'package:mob_archery/profile/stores/profile_action.dart';
 import 'package:mob_archery/profile/stores/profile_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -21,10 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
   late final ProfileAction profileAction;
   late final ProfileState profileState;
   late final AuthAction authAction;
-  late final TextEditingController nameController;
 
-  SupportedLanguage supportedLanguage = SupportedLanguage.portugueseBrazil;
-  MeasurementUnit measurementUnit = MeasurementUnit.meters;
+  static const _imagePathKey = 'profile_image_path';
 
   @override
   void initState() {
@@ -32,73 +34,81 @@ class _ProfilePageState extends State<ProfilePage> {
     profileAction = Modular.get<ProfileAction>();
     profileState = Modular.get<ProfileState>();
     authAction = Modular.get<AuthAction>();
-    nameController = TextEditingController();
-    profileAction.loadProfile().then((_) {
-      final profile = profileState.profile.value;
-      if (profile != null) {
-        nameController.text = profile.name;
-        supportedLanguage = supportedLanguageFromLocaleCode(profile.preferredLanguage);
-        measurementUnit = MeasurementUnit.values.firstWhere(
-          (unit) => unit.firestoreValue == profile.unit,
-          orElse: () => MeasurementUnit.meters,
-        );
-        if (mounted) {
-          setState(() {});
-        }
-      }
-    });
+    profileAction.loadProfile();
+    _restoreImagePath();
   }
 
-  @override
-  void dispose() {
-    nameController.dispose();
-    super.dispose();
+  Future<void> _restoreImagePath() async {
+    if (profileState.localProfileImagePath.value != null) return;
+    final prefs = await SharedPreferences.getInstance();
+    final savedPath = prefs.getString(_imagePathKey);
+    if (savedPath != null && File(savedPath).existsSync()) {
+      runInAction(() => profileState.localProfileImagePath.value = savedPath);
+    }
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+      );
+      if (picked == null) return;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_imagePathKey, picked.path);
+      runInAction(() => profileState.localProfileImagePath.value = picked.path);
+      showSuccessSnackbar('Sua foto de perfil foi atualizada com sucesso!');
+    } catch (_) {
+      showErrorSnackbar('Não foi possível atualizar a foto');
+    }
   }
 
   Widget _menuTile({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
     VoidCallback? onTap,
   }) {
+    final c = Theme.of(context).extension<CustomColorScheme>()!;
     return InkWell(
-      borderRadius: BorderRadius.circular(22),
       onTap: onTap,
-      child: Ink(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(22),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 52,
+              height: 52,
               decoration: BoxDecoration(
-                color: const Color(0xFFFFEFE6),
-                borderRadius: BorderRadius.circular(14),
+                color: c.brandPrimaryLight,
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: const Color(0xFFFF5C00)),
+              child: Icon(icon, color: c.iconPrimary, size: 26),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: c.textPrimary,
+                    ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: const TextStyle(color: Color(0xFF6B7A99), height: 1.35),
+                    style: TextStyle(color: c.textSecondary, fontSize: 14),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right_rounded, color: Color(0xFF9AA7BC)),
+            Icon(Icons.chevron_right_rounded, color: c.textSecondary),
           ],
         ),
       ),
@@ -107,180 +117,164 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final c = Theme.of(context).extension<CustomColorScheme>()!;
+
     return Scaffold(
       bottomNavigationBar: const AppBottomNavigation(currentIndex: 3),
-      appBar: AppBar(
-        leading: BackButton(onPressed: () => Modular.to.navigate('/home/')),
-        title: Text(LocaleKeys.modules_profile_title.tr()),
-        actions: [
-          IconButton(
-            onPressed: () => Modular.to.pushNamed('/accessibility/'),
-            icon: const Icon(Icons.settings_outlined),
-          ),
-        ],
-      ),
       body: SafeArea(
         child: Observer(
           builder: (_) {
             final profile = profileState.profile.value;
-            if (profile == null) {
-              return Center(child: Text(LocaleKeys.modules_profile_errors_not_found.tr()));
-            }
+            final userName = profile?.name ?? 'Júlia';
 
             return ListView(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Color(0xFFF0E2D7)),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Modular.to.navigate('/home/'),
+                      icon: Icon(Icons.arrow_back, color: c.textPrimary),
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Perfil',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: c.textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+
+                Center(
                   child: Column(
                     children: [
-                      Container(
-                        width: 118,
-                        height: 118,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(59),
-                          image: const DecorationImage(
-                            image: NetworkImage('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400'),
-                            fit: BoxFit.cover,
-                          ),
+                      GestureDetector(
+                        onTap: _pickImage,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              width: 130,
+                              height: 130,
+                              decoration: BoxDecoration(
+                                color: c.brandPrimaryLight,
+                                shape: BoxShape.circle,
+                                image: profileState.localProfileImagePath.value != null
+                                    ? DecorationImage(
+                                        image: FileImage(
+                                          File(profileState.localProfileImagePath.value!),
+                                        ),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                              ),
+                              child: profileState.localProfileImagePath.value == null
+                                  ? Icon(
+                                      Icons.add_a_photo_outlined,
+                                      size: 44,
+                                      color: c.brandPrimaryDark,
+                                    )
+                                  : null,
+                            ),
+                            Positioned(
+                              bottom: 2,
+                              right: 2,
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  color: c.brandPrimary,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: c.surface,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.edit_rounded,
+                                  color: c.buttonPrimaryForeground,
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 20),
                       Text(
-                        profile.name,
-                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        LocaleKeys.modules_profile_level_label.tr(),
-                        style: const TextStyle(
-                          color: Color(0xFFFF5C00),
-                          fontSize: 16,
+                        userName,
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w800,
+                          color: c.textPrimary,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 48),
+
                 Text(
-                  LocaleKeys.modules_profile_app_settings_section.tr(),
-                  style: const TextStyle(
-                    color: Color(0xFF7587A6),
+                  'CONFIGURAÇÕES DO APP',
+                  style: TextStyle(
+                    color: c.textSecondary,
+                    fontSize: 13,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
+                    letterSpacing: 1.2,
                   ),
-                ),
-                const SizedBox(height: 12),
-                _menuTile(
-                  icon: Icons.language_rounded,
-                  title: 'Preferencias',
-                  subtitle: 'Idioma: ${profile.preferredLanguage} · Unidade: ${profile.unit}',
-                ),
-                const SizedBox(height: 12),
-                _menuTile(
-                  icon: Icons.architecture_rounded,
-                  title: 'Equipamento',
-                  subtitle: 'Gerenciar Arcos e Flechas',
-                ),
-                const SizedBox(height: 12),
-                _menuTile(
-                  icon: Icons.accessibility_new_rounded,
-                  title: 'Acessibilidade',
-                  subtitle: 'Ajustes visuais e temporais',
-                  onTap: () => Modular.to.pushNamed('/accessibility/'),
-                ),
-                const SizedBox(height: 12),
-                _menuTile(
-                  icon: Icons.palette_outlined,
-                  title: 'Tema',
-                  subtitle: 'Sistema (Automatico)',
-                ),
-                const SizedBox(height: 12),
-                _menuTile(
-                  icon: Icons.shield_outlined,
-                  title: 'Privacidade e Seguranca',
-                  subtitle: 'Dados e permissoes',
-                ),
-                const SizedBox(height: 18),
-                const Divider(),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Nome'),
-                ),
-                const SizedBox(height: 12),
-                DropdownButtonFormField<SupportedLanguage>(
-                  value: supportedLanguage,
-                  decoration: const InputDecoration(labelText: 'Idioma'),
-                  items: SupportedLanguage.values
-                      .map(
-                        (language) => DropdownMenuItem(
-                          value: language,
-                          child: Text(language.label(context)),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() => supportedLanguage = value);
-                    }
-                  },
-                ),
-                const SizedBox(height: 12),
-                DropdownButtonFormField<MeasurementUnit>(
-                  value: measurementUnit,
-                  decoration: const InputDecoration(labelText: 'Unidade'),
-                  items: MeasurementUnit.values
-                      .map(
-                        (unit) => DropdownMenuItem(
-                          value: unit,
-                          child: Text(unit.label(context)),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() => measurementUnit = value);
-                    }
-                  },
-                ),
-                const SizedBox(height: 18),
-                FilledButton(
-                  onPressed: profileState.isLoading.value
-                      ? null
-                      : () async {
-                          await profileAction.saveProfile(
-                            name: nameController.text,
-                            supportedLanguage: supportedLanguage,
-                            measurementUnit: measurementUnit,
-                          );
-                          if (mounted) {
-                            await context.setLocale(supportedLanguage.locale);
-                          }
-                        },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF5C00),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: Text(LocaleKeys.modules_profile_save_changes_button.tr()),
                 ),
                 const SizedBox(height: 16),
-                TextButton.icon(
-                  onPressed: () async {
+                _menuTile(
+                  context: context,
+                  icon: Icons.person_rounded,
+                  title: 'Dados da conta',
+                  subtitle: 'Idioma: ${supportedLanguageFromLocaleCode(profile?.preferredLanguage ?? 'en_US').label(context)}',
+                  onTap: () => Modular.to.pushNamed('/profile/account-data'),
+                ),
+                _menuTile(
+                  context: context,
+                  icon: Icons.architecture_rounded,
+                  title: 'Acessibilidade',
+                  subtitle: 'Configurações acessíveis',
+                  onTap: () => Modular.to.pushNamed('/accessibility/'),
+                ),
+                _menuTile(
+                  context: context,
+                  icon: Icons.security,
+                  title: 'Privacidade e Segurança',
+                  subtitle: 'Dados e permissões',
+                  onTap: () {},
+                ),
+
+                const SizedBox(height: 12),
+                Divider(color: c.divider),
+                const SizedBox(height: 24),
+
+                InkWell(
+                  onTap: () async {
                     await authAction.signOut();
                     Modular.to.navigate('/auth/login');
                   },
-                  icon: const Icon(Icons.logout_rounded, color: Color(0xFFFF4B4B)),
-                  label: Text(
-                    LocaleKeys.modules_profile_sign_out_button.tr(),
-                    style: const TextStyle(
-                      color: Color(0xFFFF4B4B),
-                      fontWeight: FontWeight.w700,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      children: [
+                        Icon(Icons.logout_rounded, color: c.error, size: 28),
+                        const SizedBox(width: 32),
+                        Text(
+                          'Sair da conta',
+                          style: TextStyle(
+                            color: c.error,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

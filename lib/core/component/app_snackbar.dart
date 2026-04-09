@@ -1,11 +1,12 @@
 import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
+import 'package:mob_archery/core/theme/custom_color_scheme.dart';
 
 void showErrorSnackbar(String message) {
   Asuka.showSnackBar(
     SnackBar(
       content: Text(message),
-      backgroundColor: const Color(0xFFD32F2F),
+      backgroundColor: CustomColorScheme.light.error,
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -18,7 +19,7 @@ void showSuccessSnackbar(String message) {
   Asuka.showSnackBar(
     SnackBar(
       content: Text(message),
-      backgroundColor: const Color(0xFF2E7D32),
+      backgroundColor: CustomColorScheme.light.success,
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

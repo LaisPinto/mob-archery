@@ -23,78 +23,81 @@ import 'package:mob_archery/timer/stores/timer_action.dart';
 import 'package:mob_archery/timer/stores/timer_state.dart';
 import 'package:mob_archery/timer/timer_module.dart';
 import 'package:mob_archery/training/services/training_metrics_service.dart';
+import 'package:mob_archery/training/services/training_report_service.dart';
 import 'package:mob_archery/training/stores/training_action.dart';
 import 'package:mob_archery/training/stores/training_state.dart';
 import 'package:mob_archery/training/training_module.dart';
 
 class AppModule extends Module {
   @override
-  void binds(Injector injector) {
-    injector
+  void binds(Injector i) {
+    i
       ..addLazySingleton<AuthServiceInterface>(AuthService.new)
       ..addLazySingleton<FirestoreServiceInterface>(FirestoreService.new)
       ..addLazySingleton(AuthFormService.new)
       ..addLazySingleton(HomeSummaryService.new)
       ..addLazySingleton(TimerFeedbackService.new)
       ..addLazySingleton(TrainingMetricsService.new)
+      ..addLazySingleton(TrainingReportService.new)
       ..addLazySingleton(AccessibilityFeedbackService.new)
       ..addLazySingleton(ProfileFormService.new)
       ..addLazySingleton(AccessibilityState.new)
       ..addLazySingleton(
         () => AccessibilityAction(
-          injector.get<AccessibilityState>(),
-          injector.get<AccessibilityFeedbackService>(),
+          i.get<AccessibilityState>(),
+          i.get<AccessibilityFeedbackService>(),
         ),
       )
       ..addLazySingleton(AuthState.new)
       ..addLazySingleton(
         () => AuthAction(
-          injector.get<AuthState>(),
-          injector.get<AuthServiceInterface>(),
-          injector.get<FirestoreServiceInterface>(),
-          injector.get<AuthFormService>(),
+          i.get<AuthState>(),
+          i.get<AuthServiceInterface>(),
+          i.get<FirestoreServiceInterface>(),
+          i.get<AuthFormService>(),
         ),
       )
       ..addLazySingleton(TimerState.new)
       ..addLazySingleton(
         () => TimerAction(
-          injector.get<TimerState>(),
-          injector.get<AccessibilityState>(),
-          injector.get<TimerFeedbackService>(),
+          i.get<TimerState>(),
+          i.get<AccessibilityState>(),
+          i.get<TimerFeedbackService>(),
         ),
       )
       ..addLazySingleton(TrainingState.new)
       ..addLazySingleton(
         () => TrainingAction(
-          injector.get<TrainingState>(),
-          injector.get<AuthServiceInterface>(),
-          injector.get<FirestoreServiceInterface>(),
-          injector.get<TrainingMetricsService>(),
+          i.get<TrainingState>(),
+          i.get<AuthServiceInterface>(),
+          i.get<FirestoreServiceInterface>(),
+          i.get<TrainingMetricsService>(),
+          i.get<TrainingReportService>(),
         ),
       )
       ..addLazySingleton(HomeState.new)
       ..addLazySingleton(
         () => HomeAction(
-          injector.get<HomeState>(),
-          injector.get<HomeSummaryService>(),
-          injector.get<TrainingState>(),
+          i.get<HomeState>(),
+          i.get<HomeSummaryService>(),
+          i.get<TrainingState>(),
         ),
       )
       ..addLazySingleton(ProfileState.new)
       ..addLazySingleton(
         () => ProfileAction(
-          injector.get<ProfileState>(),
-          injector.get<AuthState>(),
-          injector.get<AuthServiceInterface>(),
-          injector.get<FirestoreServiceInterface>(),
-          injector.get<ProfileFormService>(),
+          i.get<ProfileState>(),
+          i.get<AuthState>(),
+          i.get<AuthServiceInterface>(),
+          i.get<FirestoreServiceInterface>(),
+          i.get<ProfileFormService>(),
         ),
       );
   }
 
   @override
-  void routes(RouteManager routeManager) {
-    routeManager
+  void routes(RouteManager r) {
+    r
       ..child('/', child: (_) => const LaunchPage())
       ..module('/auth', module: AuthModule())
       ..module('/home', module: HomeModule())

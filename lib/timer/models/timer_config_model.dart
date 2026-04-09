@@ -2,36 +2,68 @@ import 'package:mob_archery/timer/enums/timer_mode.dart';
 
 class TimerConfigModel {
   const TimerConfigModel({
-    required this.arrows,
+    required this.id,
+    required this.name,
+    required this.arrowsPerEnd,
+    required this.endsPerRound,
+    required this.rounds,
+    required this.isABCD,
+    required this.plusTenPerArrow,
     required this.timerMode,
     required this.isAccessibleMode,
   });
 
-  final int arrows;
+  final String id;
+  final String name;
+  final int arrowsPerEnd;
+  final int endsPerRound;
+  final int rounds;
+  final bool isABCD;
+  final bool plusTenPerArrow;
   final TimerMode timerMode;
   final bool isAccessibleMode;
 
-  int get totalSeconds {
-    final baseSeconds = switch (timerMode) {
-      TimerMode.competition => arrows == 3
-          ? 120
-          : arrows == 6
-              ? 240
-              : arrows * 30,
-      TimerMode.perArrowThirtySeconds => arrows * 30,
-    };
+  // Back-compat alias used by legacy callers
+  int get arrows => arrowsPerEnd;
 
-    final accessibleSeconds = isAccessibleMode ? arrows * 10 : 0;
-    return baseSeconds + accessibleSeconds;
+  int get totalArrows => arrowsPerEnd * endsPerRound * rounds;
+
+  int get endTotalSeconds {
+    final base = switch (timerMode) {
+      TimerMode.competition => arrowsPerEnd == 3
+          ? 120
+          : arrowsPerEnd == 6
+              ? 240
+              : arrowsPerEnd * 30,
+      TimerMode.perArrowThirtySeconds => arrowsPerEnd * 30,
+    };
+    final accessible = isAccessibleMode ? arrowsPerEnd * 10 : 0;
+    final plusTen = plusTenPerArrow ? arrowsPerEnd * 10 : 0;
+    return base + accessible + plusTen;
   }
 
+  // Legacy alias
+  int get totalSeconds => endTotalSeconds;
+
   TimerConfigModel copyWith({
-    int? arrows,
+    String? id,
+    String? name,
+    int? arrowsPerEnd,
+    int? endsPerRound,
+    int? rounds,
+    bool? isABCD,
+    bool? plusTenPerArrow,
     TimerMode? timerMode,
     bool? isAccessibleMode,
   }) {
     return TimerConfigModel(
-      arrows: arrows ?? this.arrows,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      arrowsPerEnd: arrowsPerEnd ?? this.arrowsPerEnd,
+      endsPerRound: endsPerRound ?? this.endsPerRound,
+      rounds: rounds ?? this.rounds,
+      isABCD: isABCD ?? this.isABCD,
+      plusTenPerArrow: plusTenPerArrow ?? this.plusTenPerArrow,
       timerMode: timerMode ?? this.timerMode,
       isAccessibleMode: isAccessibleMode ?? this.isAccessibleMode,
     );

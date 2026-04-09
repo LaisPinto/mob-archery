@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:mob_archery/auth/components/auth_form_card.dart';
-import 'package:mob_archery/auth/components/auth_header.dart';
+
 import 'package:mob_archery/auth/enums/auth_status.dart';
 import 'package:mob_archery/auth/stores/auth_action.dart';
 import 'package:mob_archery/auth/stores/auth_state.dart';
 import 'package:mob_archery/core/component/app_snackbar.dart';
+import 'package:mob_archery/core/theme/custom_color_scheme.dart';
 import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,23 +34,21 @@ class _LoginPageState extends State<LoginPage> {
     emailController = TextEditingController();
     passwordController = TextEditingController();
 
-    authReaction = reaction(
-      (_) => authState.authStatus.value,
-      (AuthStatus authStatus) {
-        if (authStatus == AuthStatus.authenticated) {
-          Modular.to.navigate('/home/');
-        } else if (authStatus == AuthStatus.emailVerificationPending) {
-          Modular.to.navigate('/auth/email-verification');
-        }
-      },
-    );
+    authReaction = reaction((_) => authState.authStatus.value, (
+      AuthStatus authStatus,
+    ) {
+      if (authStatus == AuthStatus.authenticated) {
+        Modular.to.navigate('/home/');
+      } else if (authStatus == AuthStatus.emailVerificationPending) {
+        Modular.to.navigate('/auth/email-verification');
+      }
+    });
 
-    _errorReaction = reaction(
-      (_) => authState.errorMessage.value,
-      (String? message) {
-        if (message != null) showErrorSnackbar(message);
-      },
-    );
+    _errorReaction = reaction((_) => authState.errorMessage.value, (
+      String? message,
+    ) {
+      if (message != null) showErrorSnackbar(message);
+    });
   }
 
   @override
@@ -64,162 +62,226 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final c = Theme.of(context).extension<CustomColorScheme>()!;
+
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-          child: Observer(
-            builder: (_) {
-              final isLoading = authState.isLoading.value;
+        child: Observer(
+          builder: (_) {
+            final isLoading = authState.isLoading.value;
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 20),
-                  const AuthHeader(
-                    centered: true,
-                    title: 'Mob Archery',
-                    subtitle: 'Treino de elite para arqueiros',
-                  ),
-                  const SizedBox(height: 20),
-                  AuthFormCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 32),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        TextField(
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            hintText: LocaleKeys.modules_auth_login_email_label.tr(),
-                          ),
+                        Image.asset(
+                          'assets/images/logo_archery.png',
+                          width: 100.86,
+                          height: 100.63,
+                          fit: BoxFit.contain,
                         ),
-                        const SizedBox(height: 14),
-                        TextField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: LocaleKeys.modules_auth_login_password_label.tr(),
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: TextButton(
-                            onPressed: isLoading
-                                ? null
-                                : () => Modular.to.pushNamed('/auth/forgot-password'),
-                            style: TextButton.styleFrom(
-                              foregroundColor: const Color(0xFFFF5C00),
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: Text(LocaleKeys.modules_auth_forgot_password_button.tr()),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        FilledButton(
-                          onPressed: isLoading
-                              ? null
-                              : () => authAction.signIn(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  ),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: const Color(0xFFFF5C00),
-                            foregroundColor: Colors.white,
-                          ),
-                          child: isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Text(LocaleKeys.modules_auth_login_button.tr()),
-                        ),
-                        const SizedBox(height: 18),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Nao tem uma conta?',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: const Color(0xFF6B7A99),
-                                  ),
-                            ),
-                            TextButton(
-                              onPressed: isLoading
-                                  ? null
-                                  : () => Modular.to.pushNamed('/auth/register'),
-                              style: TextButton.styleFrom(
-                                foregroundColor: const Color(0xFFFF5C00),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Mob Archery',
+                          style: Theme.of(context).textTheme.headlineSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.3,
                               ),
-                              child: const Text('Criar conta'),
-                            ),
-                          ],
+                          textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Expanded(child: Divider()),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: Text(
-                                'ou continue com',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: const Color(0xFF93A0B8),
-                                    ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Treino de elite para arqueiros',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: c.brandPrimaryDark,
+                                fontSize: 16,
                               ),
-                            ),
-                            const Expanded(child: Divider()),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        OutlinedButton(
-                          onPressed: null,
-                          child: const Text('Google'),
-                        ),
-                        const SizedBox(height: 10),
-                        OutlinedButton(
-                          onPressed: null,
-                          child: const Text('Apple'),
-                        ),
-                        const SizedBox(height: 18),
-                        Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFF4ED),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: const Color(0xFFFFDCC9)),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.accessibility_new_rounded,
-                                color: Color(0xFFFF5C00),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  'Acessibilidade: ative o modo acessivel a qualquer momento nas configuracoes.',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: const Color(0xFF5C657A),
-                                        height: 1.4,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
-                  ),
-                ],
-              );
-            },
-          ),
+                    const SizedBox(height: 32),
+                    TextField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: LocaleKeys.modules_auth_login_email_label
+                            .tr(),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: LocaleKeys.modules_auth_login_password_label
+                            .tr(),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: isLoading
+                            ? null
+                            : () =>
+                                  Modular.to.pushNamed('/auth/forgot-password'),
+                        child: Text(
+                          LocaleKeys.modules_auth_forgot_password_button.tr(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    FilledButton(
+                      onPressed: isLoading
+                          ? null
+                          : () => authAction.signIn(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            ),
+                      child: isLoading
+                          ? SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: c.buttonPrimaryForeground,
+                              ),
+                            )
+                          : Text(LocaleKeys.modules_auth_login_button.tr()),
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Não tem uma conta?',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: c.textSecondary),
+                        ),
+                        TextButton(
+                          onPressed: isLoading
+                              ? null
+                              : () => Modular.to.pushNamed('/auth/register'),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.only(left: 4),
+                            textStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          child: const Text('Criar conta'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      children: [
+                        Expanded(child: Divider(color: c.divider)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            'ou continue com',
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(color: c.textSecondary),
+                          ),
+                        ),
+                        Expanded(child: Divider(color: c.divider)),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    OutlinedButton(
+                      onPressed: null,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/logo_google.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text('Google'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    OutlinedButton(
+                      onPressed: null,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/logo_apple.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text('Apple'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: c.info,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: c.brandPrimaryLight),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.accessibility_new_rounded,
+                            color: c.iconPrimary,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: c.textSecondary,
+                                      height: 1.5,
+                                    ),
+                                children: [
+                                  TextSpan(
+                                    text: 'Acessibilidade: ',
+                                    style: TextStyle(
+                                      color: c.brandPrimaryDark,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        'ative o modo acessível a qualquer momento nas configurações.',
+                                    style: TextStyle(
+                                      color: c.textPrimary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

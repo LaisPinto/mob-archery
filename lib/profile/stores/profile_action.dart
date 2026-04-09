@@ -44,6 +44,60 @@ class ProfileAction {
     });
   }
 
+  Future<void> updateAccountData({
+    required String name,
+    required String email,
+    required String password,
+    required SupportedLanguage language,
+  }) async {
+    clearMessages();
+
+    final nameError = profileFormService.validateName(name);
+    final emailError = profileFormService.validateEmail(email);
+    final passwordError = profileFormService.validatePassword(password);
+
+    if (nameError != null || emailError != null || passwordError != null) {
+      runInAction(() {
+        state.errorMessage.value = nameError ?? emailError ?? passwordError;
+      });
+      return;
+    }
+
+    final authUser = authService.currentUser;
+    final currentProfile = authState.userProfile.value;
+    if (authUser == null || currentProfile == null) {
+      runInAction(() => state.errorMessage.value = 'No authenticated user found.');
+      return;
+    }
+
+    runInAction(() => state.isLoading.value = true);
+    try {
+      final updatedUser = currentProfile.copyWith(
+        name: name.trim(),
+        preferredLanguage: language.localeCode,
+      );
+      await firestoreService.upsertUserProfile(updatedUser);
+      runInAction(() {
+        authState.userProfile.value = updatedUser;
+        state.profile.value = ProfileModel.fromUserModel(updatedUser);
+      });
+
+      if (email.trim() != authUser.email) {
+        await authService.updateEmail(email.trim());
+      }
+
+      if (password.isNotEmpty) {
+        await authService.updatePassword(password);
+      }
+
+      runInAction(() => state.successMessage.value = 'Account data updated successfully.');
+    } on Exception catch (exception) {
+      runInAction(() => state.errorMessage.value = exception.toString());
+    } finally {
+      runInAction(() => state.isLoading.value = false);
+    }
+  }
+
   Future<void> saveProfile({
     required String name,
     required SupportedLanguage supportedLanguage,

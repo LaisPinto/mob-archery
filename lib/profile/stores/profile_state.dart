@@ -6,4 +6,5 @@ class ProfileState {
   final Observable<bool> isLoading = Observable<bool>(false);
   final Observable<String?> errorMessage = Observable<String?>(null);
   final Observable<String?> successMessage = Observable<String?>(null);
+  final Observable<String?> localProfileImagePath = Observable<String?>(null);
 }

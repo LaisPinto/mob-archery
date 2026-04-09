@@ -1,6 +1,6 @@
 export 'auth_module.dart';
 export 'components/auth_form_card.dart';
-export 'components/auth_header.dart';
+
 export 'enums/auth_status.dart';
 export 'models/auth_user_model.dart';
 export 'models/user_model.dart';

@@ -26,25 +26,33 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        final brightness =
-            WidgetsBinding.instance.platformDispatcher.platformBrightness;
         final isHighContrast = accessibilityState.isHighContrastEnabled.value;
+        final isDarkMode = accessibilityState.isDarkModeEnabled.value;
+        final double textScale = accessibilityState.textScaleFactor.value;
+
+        final ThemeMode themeMode = isDarkMode
+            ? ThemeMode.dark
+            : ThemeMode.light;
 
         return MaterialApp.router(
           title: 'Mob Archery',
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.buildTheme(
+          theme: AppTheme.instance.buildTheme(
             brightness: Brightness.light,
             highContrast: isHighContrast,
           ),
-          darkTheme: AppTheme.buildTheme(
+          darkTheme: AppTheme.instance.buildTheme(
             brightness: Brightness.dark,
             highContrast: isHighContrast,
           ),
-          themeMode:
-              brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
+          themeMode: themeMode,
           routerConfig: Modular.routerConfig,
-          builder: Asuka.builder,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: TextScaler.linear(textScale)),
+            child: Asuka.builder(context, child),
+          ),
           locale: context.locale,
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,

@@ -4,57 +4,18 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_action.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
+import 'package:mob_archery/core/theme/custom_color_scheme.dart';
 import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
+import 'package:mob_archery/core/widgets/switch_card_component.dart';
 import 'package:mob_archery/timer/stores/timer_action.dart';
 import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class AccessibilityPage extends StatelessWidget {
   const AccessibilityPage({super.key});
 
-  Widget _switchCard({
-    required String title,
-    required String subtitle,
-    required bool value,
-    required ValueChanged<bool> onChanged,
-    IconData? icon,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: const Color(0xFFF0E2D7)),
-      ),
-      child: Row(
-        children: [
-          if (icon != null) ...[
-            Icon(icon, color: const Color(0xFFFF5C00)),
-            const SizedBox(width: 12),
-          ],
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Color(0xFF6B7A99), height: 1.35),
-                ),
-              ],
-            ),
-          ),
-          Switch(value: value, onChanged: onChanged),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final customColor = Theme.of(context).extension<CustomColorScheme>()!;
     final accessibilityState = Modular.get<AccessibilityState>();
     final accessibilityAction = Modular.get<AccessibilityAction>();
     final timerAction = Modular.get<TimerAction>();
@@ -62,150 +23,222 @@ class AccessibilityPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: const AppBottomNavigation(currentIndex: 0),
       appBar: AppBar(
-        leading: BackButton(onPressed: () => Modular.to.navigate('/home/')),
-        title: Text(LocaleKeys.modules_accessibility_title.tr()),
+        title: const Text('Acessibilidade'),
+        leading: BackButton(onPressed: () => Modular.to.navigate('/profile/')),
       ),
       body: SafeArea(
-        child: Observer(
-          builder: (_) => ListView(
-            padding: const EdgeInsets.all(18),
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LocaleKeys.modules_accessibility_personalize_title.tr(),
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      LocaleKeys.modules_accessibility_personalize_subtitle.tr(),
-                      style: const TextStyle(color: Color(0xFF6B7A99), height: 1.45),
-                    ),
-                  ],
-                ),
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          children: [
+            Text(
+              LocaleKeys.modules_accessibility_personalize_title.tr(),
+              style: TextStyle(
+                color: customColor.textPrimary,
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
               ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Color(0xFFF0E2D7)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.text_fields_rounded, color: Color(0xFFFF5C00)),
-                        const SizedBox(width: 10),
-                        Text(
-                          LocaleKeys.modules_accessibility_text_size_label.tr(),
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              LocaleKeys.modules_accessibility_personalize_subtitle.tr(),
+              style: TextStyle(
+                color: customColor.textSecondary,
+                fontSize: 16,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // ── Tamanho do Texto ──────────────────────────────────────────
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: customColor.surface,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: customColor.border),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.text_fields_rounded,
+                        color: customColor.brandPrimaryDark,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        LocaleKeys.modules_accessibility_text_size_label.tr(),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: customColor.textPrimary,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 22),
-                    Row(
-                      children: [
-                        const Text('A', style: TextStyle(color: Color(0xFF7C8AA5))),
-                        Expanded(
-                          child: Slider(
-                            value: 0.6,
-                            onChanged: (_) {},
-                            activeColor: const Color(0xFFFF5C00),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Observer(
+                    builder: (_) {
+                      final double scale =
+                          accessibilityState.textScaleFactor.value;
+                      final double sliderValue = ((scale - 0.8) / 1.2)
+                          .clamp(0.0, 1.0)
+                          .toDouble();
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'A',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: customColor.textPrimary,
+                                  ),
+                                ),
+                                Text(
+                                  'A',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: customColor.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Text(
-                          'A',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
+                          SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              trackHeight: 6,
+                              activeTrackColor: customColor.brandPrimaryDark,
+                              thumbColor: customColor.surface,
+                              inactiveTrackColor: customColor.border,
+                              thumbShape: const RoundSliderThumbShape(
+                                enabledThumbRadius: 10,
+                              ),
+                              overlayShape: const RoundSliderOverlayShape(
+                                overlayRadius: 20,
+                              ),
+                            ),
+                            child: Slider(
+                              value: sliderValue,
+                              onChanged: (double v) => accessibilityAction
+                                  .setTextScale(0.8 + v * 1.2),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      LocaleKeys.modules_accessibility_text_size_hint.tr(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Color(0xFF6B7A99)),
-                    ),
-                  ],
+                          const SizedBox(height: 8),
+                          Text(
+                            LocaleKeys.modules_accessibility_text_size_hint
+                                .tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: customColor.textSecondary,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            // ── Visual & Interação ────────────────────────────────────────
+            Padding(
+              padding: const EdgeInsets.only(top: 40, bottom: 16),
+              child: Text(
+                'Visual & Interação',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: customColor.textSecondary,
                 ),
               ),
-              const SizedBox(height: 20),
-              Text(
-                LocaleKeys.modules_accessibility_section_visual.tr(),
-                style: const TextStyle(
-                  color: Color(0xFF7587A6),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.8,
-                ),
-              ),
-              const SizedBox(height: 12),
-              _switchCard(
+            ),
+            Observer(
+              builder: (_) => SwitchCardComponent(
                 title: 'Alto Contraste',
-                subtitle: 'Melhora visibilidade de textos e icones',
+                subtitle: 'Melhora visibilidade de textos e ícones',
                 value: accessibilityState.isHighContrastEnabled.value,
                 onChanged: accessibilityAction.toggleHighContrast,
               ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.modules_accessibility_section_alerts.tr(),
-                style: const TextStyle(
-                  color: Color(0xFF7587A6),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.8,
+            ),
+            Observer(
+              builder: (_) => SwitchCardComponent(
+                title: 'Dark Mode',
+                subtitle: 'Deixa a interface escura para economizar bateria',
+                value: accessibilityState.isDarkModeEnabled.value,
+                onChanged: accessibilityAction.toggleDarkMode,
+              ),
+            ),
+
+            // ── Sinais de Alerta ──────────────────────────────────────────
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                'Sinais de Alerta',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: customColor.textSecondary,
                 ),
               ),
-              const SizedBox(height: 12),
-              _switchCard(
+            ),
+            Observer(
+              builder: (_) => SwitchCardComponent(
                 title: 'Sinal Sonoro',
-                subtitle: 'Anuncios do leitor de tela',
-                value: accessibilityState.isScreenReaderAnnouncementsEnabled.value,
-                onChanged: accessibilityAction.toggleScreenReaderAnnouncements,
                 icon: Icons.volume_up_outlined,
+                value:
+                    accessibilityState.isScreenReaderAnnouncementsEnabled.value,
+                onChanged: accessibilityAction.toggleScreenReaderAnnouncements,
               ),
-              const SizedBox(height: 12),
-              _switchCard(
-                title: 'Vibracao Haptica',
-                subtitle: 'Feedback tactil para acoes criticas',
+            ),
+            Observer(
+              builder: (_) => SwitchCardComponent(
+                title: 'Vibração Háptica',
+                icon: Icons.vibration_rounded,
                 value: accessibilityState.isHapticFeedbackEnabled.value,
                 onChanged: accessibilityAction.toggleHapticFeedback,
-                icon: Icons.vibration_rounded,
               ),
-              const SizedBox(height: 12),
-              _switchCard(
+            ),
+            Observer(
+              builder: (_) => SwitchCardComponent(
                 title: 'Flash de Alerta',
-                subtitle: 'Recurso visual em fases temporizadas',
-                value: false,
-                onChanged: (_) {},
                 icon: Icons.flash_on_outlined,
+                value: accessibilityState.isFlashEnabled.value,
+                onChanged: accessibilityAction.toggleFlash,
               ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.modules_accessibility_section_reaction.tr(),
-                style: const TextStyle(
-                  color: Color(0xFF7587A6),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.8,
+            ),
+
+            // ── Tempo de Reação ───────────────────────────────────────────
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                'Tempo de Reação',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: customColor.textSecondary,
                 ),
               ),
-              const SizedBox(height: 12),
-              _switchCard(
+            ),
+            Observer(
+              builder: (_) => SwitchCardComponent(
                 title: 'Tempo Extra',
-                subtitle: 'Adiciona +10s por flecha em acoes temporais',
+                subtitle: 'Adiciona +10s por flecha em ações temporais',
                 value: accessibilityState.isAccessibleTimerEnabled.value,
-                onChanged: (value) async {
-                  await accessibilityAction.toggleAccessibleTimer(value);
+                onChanged: (bool v) async {
+                  await accessibilityAction.toggleAccessibleTimer(v);
                   timerAction.syncAccessibilityPreference();
                 },
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 32),
+          ],
         ),
       ),
     );

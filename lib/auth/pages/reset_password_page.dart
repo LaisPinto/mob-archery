@@ -74,145 +74,141 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     return Scaffold(
       appBar: AppBar(leading: BackButton(onPressed: Modular.to.pop)),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(22),
-          child: Observer(
-            builder: (_) => Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  LocaleKeys.modules_auth_reset_password_page_title.tr(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(22),
+        child: Observer(
+          builder: (_) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                LocaleKeys.modules_auth_reset_password_page_title.tr(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  LocaleKeys.modules_auth_reset_password_description.tr(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: const Color(0xFF6B7A99),
-                  ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                LocaleKeys.modules_auth_reset_password_description.tr(),
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: const Color(0xFF6B7A99)),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: actionCodeController,
+                decoration: const InputDecoration(hintText: 'Codigo de acao'),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                onChanged: (_) => setState(() {}),
+                decoration: const InputDecoration(hintText: 'Nova senha'),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: confirmPasswordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  hintText: 'Confirme a nova senha',
                 ),
-                const SizedBox(height: 24),
-                TextField(
-                  controller: actionCodeController,
-                  decoration: const InputDecoration(hintText: 'Codigo de acao'),
+              ),
+              const SizedBox(height: 18),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF4F8FF),
+                  borderRadius: BorderRadius.circular(18),
                 ),
-                const SizedBox(height: 14),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  onChanged: (_) => setState(() {}),
-                  decoration: const InputDecoration(hintText: 'Nova senha'),
-                ),
-                const SizedBox(height: 14),
-                TextField(
-                  controller: confirmPasswordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    hintText: 'Confirme a nova senha',
-                  ),
-                ),
-                const SizedBox(height: 18),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF4F8FF),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              LocaleKeys
-                                  .modules_auth_reset_password_strength_label
-                                  .tr(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            LocaleKeys
+                                .modules_auth_reset_password_strength_label
+                                .tr(),
+                            style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
-                          Text(
-                            '${(passwordStrength * 100).round()}%',
-                            style: const TextStyle(
-                              color: Color(0xFFFF5C00),
-                              fontWeight: FontWeight.w700,
-                            ),
+                        ),
+                        Text(
+                          '${(passwordStrength * 100).round()}%',
+                          style: const TextStyle(
+                            color: Color(0xFFFF5C00),
+                            fontWeight: FontWeight.w700,
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      LinearProgressIndicator(
-                        value: passwordStrength,
-                        minHeight: 7,
-                        borderRadius: BorderRadius.circular(999),
-                        backgroundColor: const Color(0xFFDCE5F2),
-                        color: const Color(0xFFFF5C00),
-                      ),
-                      const SizedBox(height: 14),
-                      _requirement(
-                        password.length >= 8,
-                        'Minimo de 8 caracteres',
-                      ),
-                      _requirement(
-                        RegExp(r'[A-Z]').hasMatch(password),
-                        'Pelo menos uma letra maiuscula',
-                      ),
-                      _requirement(
-                        RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(password),
-                        'Um caractere especial (@, #, !, %)',
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    LinearProgressIndicator(
+                      value: passwordStrength,
+                      minHeight: 7,
+                      borderRadius: BorderRadius.circular(999),
+                      backgroundColor: const Color(0xFFDCE5F2),
+                      color: const Color(0xFFFF5C00),
+                    ),
+                    const SizedBox(height: 14),
+                    _requirement(
+                      password.length >= 8,
+                      'Minimo de 8 caracteres',
+                    ),
+                    _requirement(
+                      RegExp(r'[A-Z]').hasMatch(password),
+                      'Pelo menos uma letra maiuscula',
+                    ),
+                    _requirement(
+                      RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(password),
+                      'Um caractere especial (@, #, !, %)',
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                FilledButton(
-                  onPressed: authState.isLoading.value
-                      ? null
-                      : () async {
-                          if (passwordController.text !=
-                              confirmPasswordController.text) {
-                            setState(() {
-                              localErrorMessage = 'As senhas nao coincidem.';
-                            });
-                            return;
-                          }
-                          setState(() => localErrorMessage = null);
-                          await authAction.confirmPasswordReset(
-                            actionCode: actionCodeController.text.trim(),
-                            newPassword: passwordController.text,
-                          );
-                        },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF5C00),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: Text(
-                    LocaleKeys.modules_auth_reset_password_submit_button.tr(),
-                  ),
+              ),
+              const Spacer(),
+              FilledButton(
+                onPressed: authState.isLoading.value
+                    ? null
+                    : () async {
+                        if (passwordController.text !=
+                            confirmPasswordController.text) {
+                          setState(() {
+                            localErrorMessage = 'As senhas nao coincidem.';
+                          });
+                          return;
+                        }
+                        setState(() => localErrorMessage = null);
+                        await authAction.confirmPasswordReset(
+                          actionCode: actionCodeController.text.trim(),
+                          newPassword: passwordController.text,
+                        );
+                      },
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF5C00),
+                  foregroundColor: Colors.white,
                 ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () => Modular.to.navigate('/auth/login'),
-                  child: Text(
-                    LocaleKeys.modules_auth_reset_password_cancel_button.tr(),
-                  ),
+                child: Text(
+                  LocaleKeys.modules_auth_reset_password_submit_button.tr(),
                 ),
-                if (localErrorMessage != null) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    localErrorMessage!,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ],
+              ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () => Modular.to.navigate('/auth/login'),
+                child: Text(
+                  LocaleKeys.modules_auth_reset_password_cancel_button.tr(),
+                ),
+              ),
+              if (localErrorMessage != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  localErrorMessage!,
+                  style: const TextStyle(color: Colors.red),
+                ),
               ],
-            ),
+            ],
           ),
         ),
       ),

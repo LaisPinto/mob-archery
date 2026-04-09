@@ -1,13 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mob_archery/core/theme/custom_color_scheme.dart';
 import 'package:mob_archery/timer/stores/timer_state.dart';
-import 'package:mob_archery/training/enums/bow_type.dart';
-import 'package:mob_archery/training/enums/registered_by.dart';
-import 'package:mob_archery/training/stores/training_action.dart';
-import 'package:mob_archery/training/stores/training_state.dart';
 import 'package:mob_archery/translations/locale_keys.g.dart';
+
+import '../_export_training.dart';
 
 class RegisterEndPage extends StatefulWidget {
   const RegisterEndPage({
@@ -24,18 +25,29 @@ class RegisterEndPage extends StatefulWidget {
 }
 
 class _RegisterEndPageState extends State<RegisterEndPage> {
-  final scoreOptions = const ['X', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'M'];
+  static const _bowTypeLabels = {
+    BowType.recurve: 'Recurvo',
+    BowType.compound: 'Composto',
+    BowType.barebow: 'Barebow',
+    BowType.traditional: 'Tradicional',
+  };
 
   late final TrainingAction trainingAction;
   late final TrainingState trainingState;
+  late final TextEditingController nameController;
   late final TextEditingController distanceController;
+  late final TextEditingController notesController;
   late final TextEditingController spotterController;
+
   late int arrows;
   late RegisteredBy registeredBy;
-  String? localErrorMessage;
+  late List<String?> arrowSelections;
 
   BowType bowType = BowType.recurve;
-  late List<String?> arrowSelections;
+  String? localErrorMessage;
+  int? _editingIndex;
+
+  // ── Lifecycle ──────────────────────────────────────────────────────────────
 
   @override
   void initState() {
@@ -46,361 +58,420 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
     arrows = timerConfig.arrows;
     registeredBy = widget.registeredBy;
     arrowSelections = List<String?>.filled(arrows, null);
+    nameController = TextEditingController();
     distanceController = TextEditingController(text: '70');
+    notesController = TextEditingController();
     spotterController = TextEditingController(text: widget.spotterName ?? '');
   }
 
   @override
   void dispose() {
+    nameController.dispose();
     distanceController.dispose();
+    notesController.dispose();
     spotterController.dispose();
     super.dispose();
   }
 
-  double get averageScore {
-    final selectedScores = arrowSelections.whereType<String>().toList();
-    if (selectedScores.isEmpty) {
-      return 0;
-    }
+  // ── Computed ───────────────────────────────────────────────────────────────
 
+  double get _averageScore {
+    final selected = arrowSelections.whereType<String>().toList();
+    if (selected.isEmpty) return 0;
     int total = 0;
-    for (final score in selectedScores) {
-      if (score == 'X' || score == '10') {
+    for (final s in selected) {
+      if (s == 'X' || s == '10') {
         total += 10;
-      } else if (score != 'M') {
-        total += int.tryParse(score) ?? 0;
+      } else if (s != 'M') {
+        total += int.tryParse(s) ?? 0;
       }
     }
-    return total / selectedScores.length;
+    return total / selected.length;
   }
 
-  int get xOrTenCount => arrowSelections
-      .where((score) => score == 'X' || score == '10')
-      .length;
+  int get _xOrTenCount =>
+      arrowSelections.where((s) => s == 'X' || s == '10').length;
 
-  Widget _scoreCircle(int index) {
+  // ── Actions ────────────────────────────────────────────────────────────────
+
+  void _onScoreSelected(String score) {
+    if (_editingIndex != null) {
+      setState(() {
+        arrowSelections[_editingIndex!] = score;
+        _editingIndex = null;
+      });
+      return;
+    }
+    final emptyIndex = arrowSelections.indexWhere((s) => s == null);
+    if (emptyIndex != -1) {
+      setState(() => arrowSelections[emptyIndex] = score);
+    }
+  }
+
+  Future<void> _save() async {
+    if (arrowSelections.any((s) => s == null)) {
+      setState(
+        () => localErrorMessage = 'Selecione uma pontuação para cada flecha.',
+      );
+      return;
+    }
+    final distance = double.tryParse(
+      distanceController.text.replaceAll(',', '.'),
+    );
+    if (distance == null || distance <= 0) {
+      setState(() => localErrorMessage = 'Informe uma distância válida.');
+      return;
+    }
+    setState(() => localErrorMessage = null);
+
+    await trainingAction.registerEnd(
+      arrows: arrowSelections.whereType<String>().toList(),
+      distance: distance,
+      bowType: bowType,
+      registeredBy: registeredBy,
+      spotterName: registeredBy == RegisteredBy.spotter
+          ? spotterController.text
+          : null,
+      name: nameController.text.trim(),
+    );
+
+    if (trainingState.errorMessage.value == null && mounted) {
+      Modular.to.pop();
+    }
+  }
+
+  // ── Color helpers ──────────────────────────────────────────────────────────
+
+  Color _circleZoneColor(String? score) {
+    switch (score) {
+      case 'X':
+        return const Color(0xFF3B82F6);
+      case '10':
+      case '9':
+        return const Color(0xFFF97316);
+      case '8':
+      case '7':
+        return const Color(0xFFDC2626);
+      case '6':
+      case '5':
+        return const Color(0xFF3B82F6);
+      case '4':
+      case '3':
+      case '2':
+      case '1':
+        return const Color(0xFF0F172A);
+      case 'M':
+        return const Color(0xFF94A3B8);
+      default:
+        return const Color(0xFFCBD5E1);
+    }
+  }
+
+  // ── Score circle ───────────────────────────────────────────────────────────
+
+  Widget _buildScoreCircle(int index, CustomColorScheme c) {
     final score = arrowSelections[index];
     final selected = score != null;
+    final isEditing = _editingIndex == index;
+    final zoneColor = _circleZoneColor(score);
+    final isLightZone = score == '2' || score == '1';
 
-    return Column(
-      children: [
-        Container(
-          width: 54,
-          height: 54,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: selected ? const Color(0xFFFF5C00) : const Color(0xFFD8E1ED),
-              width: 2,
-            ),
-          ),
-          child: Center(
-            child: Text(
-              score ?? '',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-                color: selected ? const Color(0xFFFF5C00) : const Color(0xFFD8E1ED),
+    final circle = selected
+        ? Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isEditing
+                  ? c.brandPrimary.withValues(alpha: 0.15)
+                  : zoneColor.withValues(alpha: 0.10),
+              border: Border.all(
+                color: isEditing ? c.brandPrimary : zoneColor,
+                width: isEditing ? 3.0 : 2.5,
               ),
             ),
+            child: Center(
+              child: Text(
+                score,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: isEditing
+                      ? c.brandPrimary
+                      : (isLightZone ? c.textSecondary : zoneColor),
+                ),
+              ),
+            ),
+          )
+        : SizedBox(
+            width: 56,
+            height: 56,
+            child: CustomPaint(
+              painter: _DashedCirclePainter(
+                color: isEditing ? c.brandPrimary : c.border,
+              ),
+            ),
+          );
+
+    return GestureDetector(
+      onTap: () => setState(() {
+        _editingIndex = _editingIndex == index ? null : index;
+      }),
+      child: Column(
+        children: [
+          circle,
+          const SizedBox(height: 5),
+          Text(
+            '${index + 1}ª',
+            style: TextStyle(color: c.textTertiary, fontSize: 11),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text('${index + 1}º', style: const TextStyle(color: Color(0xFF93A0B8))),
-      ],
+        ],
+      ),
     );
   }
 
-  Color _buttonColor(String score) {
-    switch (score) {
-      case '10':
-      case '9':
-        return const Color(0xFFFFCC15);
-      case '8':
-      case '7':
-        return const Color(0xFFE32727);
-      case '6':
-      case '5':
-        return const Color(0xFF4280E8);
-      case '4':
-      case '3':
-      case 'X':
-        return const Color(0xFF121B31);
-      case 'M':
-      case '2':
-      case '1':
-        return const Color(0xFFE7EDF5);
-      default:
-        return Colors.white;
-    }
-  }
-
-  Color _buttonTextColor(String score) {
-    return score == 'M' || score == '2' || score == '1'
-        ? const Color(0xFF1A2238)
-        : Colors.white;
-  }
+  // ── Build ──────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
+    final c = Theme.of(context).extension<CustomColorScheme>()!;
+
     return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        leading: BackButton(onPressed: Modular.to.pop),
-        title: Text(LocaleKeys.modules_training_register_title.tr()),
+        backgroundColor: const Color(0xFFF8FAFC),
+        elevation: 0,
+        centerTitle: false,
+        iconTheme: IconThemeData(color: c.textPrimary),
+        title: Text(
+          LocaleKeys.modules_training_register_title.tr(),
+          style: TextStyle(
+            color: c.textPrimary,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: SafeArea(
         child: Observer(
           builder: (_) => ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: const Color(0xFFF0E2D7)),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 52,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFEFE6),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Icon(Icons.gps_fixed_rounded, color: Color(0xFFFF5C00)),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Distancia: ${distanceController.text}m | Arco: Recurvo',
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            LocaleKeys.modules_training_register_edit_context.tr(),
-                            style: const TextStyle(color: Color(0xFFFF5C00)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFEFE6),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: const Text(
-                        'End 4/12',
-                        style: TextStyle(color: Color(0xFFFF5C00), fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.modules_training_register_selected_scores.tr(),
-                style: const TextStyle(
-                  color: Color(0xFF7587A6),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1,
-                ),
-              ),
+              // ── 1. Informações do treino ──────────────────────────────
+              _SectionLabel(label: 'INFORMAÇÕES DO TREINO', c: c),
               const SizedBox(height: 12),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: List.generate(arrows, _scoreCircle),
+              _OutlineInput(
+                controller: nameController,
+                hint: 'Nome',
+                textCapitalization: TextCapitalization.sentences,
+                c: c,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
+              _OutlineInput(
+                controller: distanceController,
+                hint: 'Distância de disparo',
+                keyboardType: TextInputType.number,
+                c: c,
+              ),
+              const SizedBox(height: 8),
+              _BowTypeDropdown(
+                value: bowType,
+                labels: _bowTypeLabels,
+                onChanged: (v) {
+                  if (v != null) setState(() => bowType = v);
+                },
+                c: c,
+              ),
+              const SizedBox(height: 24),
+
+              // ── 2. Scores selecionados ────────────────────────────────
+              _SectionLabel(label: 'SCORES SELECIONADOS', c: c),
+              const SizedBox(height: 14),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                clipBehavior: Clip.none,
+                child: Row(
+                  children: List.generate(
+                    arrows,
+                    (index) => Padding(
+                      padding: EdgeInsets.only(
+                        right: index < arrows - 1 ? 12.0 : 0,
+                      ),
+                      child: _buildScoreCircle(index, c),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // ── 3. Teclado de pontuação ─────────────────────────────────
+              ScoreKeyboardComponent(onScoreSelected: _onScoreSelected),
+              const SizedBox(height: 24),
+
+              // ── 4. Métricas do end ──────────────────────────────────────
               Row(
                 children: [
                   Expanded(
-                    child: _MetricCard(
-                      title: 'Media do End',
-                      value: averageScore.toStringAsFixed(1),
+                    child: MetricCardComponent(
+                      label: 'Média do End',
+                      value: _averageScore.toStringAsFixed(1),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: _MetricCard(
-                      title: 'X / 10',
-                      value: '$xOrTenCount / ${arrowSelections.whereType<String>().length}',
+                    child: MetricCardComponent(
+                      label: 'X / 10',
+                      value:
+                          '$_xOrTenCount / ${arrowSelections.whereType<String>().length}',
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
+
+              // ── 5. Anotações ──────────────────────────────────────────
+              _SectionLabel(label: 'ANOTAÇÕES', c: c),
+              const SizedBox(height: 10),
+              TextField(
+                controller: notesController,
+                maxLines: 3,
+                textCapitalization: TextCapitalization.sentences,
+                style: TextStyle(color: c.textPrimary),
+                decoration: InputDecoration(
+                  hintText: 'Observações sobre este end...',
+                  hintStyle: TextStyle(color: c.inputHint),
+                  alignLabelWithHint: true,
+                  filled: true,
+                  fillColor: c.inputBackground,
+                  contentPadding: const EdgeInsets.all(14),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: c.inputBorder),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: c.inputBorder),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: c.brandPrimary, width: 1.5),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+
+              // ── 6. Registro por Spotter ───────────────────────────────
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFF4ED),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFFFD5BF)),
+                  color: c.info,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: c.brandPrimaryLight),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.remove_red_eye_outlined, color: Color(0xFFFF5C00)),
+                    Icon(Icons.remove_red_eye_outlined, color: c.brandPrimary),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            LocaleKeys.modules_training_register_spotter_toggle_title.tr(),
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                            LocaleKeys
+                                .modules_training_register_spotter_toggle_title
+                                .tr(),
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: c.textPrimary,
+                            ),
                           ),
+                          const SizedBox(height: 2),
                           Text(
-                            LocaleKeys.modules_training_register_spotter_toggle_desc.tr(),
-                            style: const TextStyle(color: Color(0xFF6B7A99)),
+                            LocaleKeys
+                                .modules_training_register_spotter_toggle_desc
+                                .tr(),
+                            style: TextStyle(
+                              color: c.textSecondary,
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Switch(
                       value: registeredBy == RegisteredBy.spotter,
-                      onChanged: (value) {
-                        setState(() {
-                          registeredBy =
-                              value ? RegisteredBy.spotter : RegisteredBy.user;
-                        });
-                      },
+                      onChanged: (value) => setState(() {
+                        registeredBy = value
+                            ? RegisteredBy.spotter
+                            : RegisteredBy.user;
+                      }),
                     ),
                   ],
                 ),
               ),
               if (registeredBy == RegisteredBy.spotter) ...[
                 const SizedBox(height: 12),
-                TextField(
+                _OutlineInput(
                   controller: spotterController,
-                  decoration: const InputDecoration(
-                    hintText: 'Nome do spotter responsavel',
-                  ),
+                  hint: 'Nome do spotter responsável',
+                  textCapitalization: TextCapitalization.words,
+                  c: c,
                 ),
               ],
-              const SizedBox(height: 18),
-              GridView.builder(
-                itemCount: scoreOptions.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 1.05,
-                ),
-                itemBuilder: (context, index) {
-                  final score = scoreOptions[index];
-                  return FilledButton(
-                    onPressed: () {
-                      final emptyIndex =
-                          arrowSelections.indexWhere((item) => item == null);
-                      if (emptyIndex != -1) {
-                        setState(() {
-                          arrowSelections[emptyIndex] = score;
-                        });
-                      }
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: _buttonColor(score),
-                      foregroundColor: _buttonTextColor(score),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          score,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            color: _buttonTextColor(score),
-                          ),
-                        ),
-                        if (score == 'X')
-                          Text('10 pts', style: TextStyle(fontSize: 11, color: _buttonTextColor(score))),
-                        if (score == 'M')
-                          const Text('Miss', style: TextStyle(fontSize: 11, color: Color(0xFF7C8AA5))),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 24),
+
+              // ── 7. Desfazer + Salvar ──────────────────────────────────
               Row(
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      final lastIndex =
-                          arrowSelections.lastIndexWhere((item) => item != null);
-                      if (lastIndex != -1) {
-                        setState(() {
-                          arrowSelections[lastIndex] = null;
-                        });
-                      }
-                    },
-                    child: const Icon(Icons.undo_rounded),
-                  ),
-                  const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
-                      onPressed: trainingState.isLoading.value
-                          ? null
-                          : () async {
-                              final missingScores =
-                                  arrowSelections.any((score) => score == null);
-                              if (missingScores) {
-                                setState(() {
-                                  localErrorMessage = 'Every arrow must have a score.';
-                                });
-                                return;
-                              }
-
-                              final distance = double.tryParse(
-                                distanceController.text.replaceAll(',', '.'),
-                              );
-                              if (distance == null || distance <= 0) {
-                                setState(() {
-                                  localErrorMessage = 'Enter a valid distance.';
-                                });
-                                return;
-                              }
-
-                              setState(() => localErrorMessage = null);
-                              await trainingAction.registerEnd(
-                                arrows: arrowSelections.whereType<String>().toList(),
-                                distance: distance,
-                                bowType: bowType,
-                                registeredBy: registeredBy,
-                                spotterName: registeredBy == RegisteredBy.spotter
-                                    ? spotterController.text
-                                    : null,
-                              );
-
-                              if (trainingState.errorMessage.value == null && mounted) {
-                                Modular.to.pop();
-                              }
-                            },
+                      onPressed: trainingState.isLoading.value ? null : _save,
                       style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF5C00),
-                        foregroundColor: Colors.white,
+                        minimumSize: const Size(0, 54),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      child: Text(LocaleKeys.modules_training_register_save_button.tr()),
+                      child: trainingState.isLoading.value
+                          ? SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: c.buttonPrimaryForeground,
+                              ),
+                            )
+                          : Text(
+                              LocaleKeys.modules_training_register_save_button
+                                  .tr(),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                     ),
                   ),
                 ],
               ),
+
+              // ── Erros ─────────────────────────────────────────────────
               if (localErrorMessage != null) ...[
                 const SizedBox(height: 12),
-                Text(localErrorMessage!, style: const TextStyle(color: Colors.red)),
+                Text(
+                  localErrorMessage!,
+                  style: TextStyle(color: c.error, fontSize: 13),
+                ),
               ],
+              if (trainingState.errorMessage.value != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  trainingState.errorMessage.value!,
+                  style: TextStyle(color: c.error, fontSize: 13),
+                ),
+              ],
+              const SizedBox(height: 8),
             ],
           ),
         ),
@@ -409,34 +480,157 @@ class _RegisterEndPageState extends State<RegisterEndPage> {
   }
 }
 
-class _MetricCard extends StatelessWidget {
-  const _MetricCard({
-    required this.title,
-    required this.value,
+// ── Dashed circle painter ──────────────────────────────────────────────────
+
+class _DashedCirclePainter extends CustomPainter {
+  const _DashedCirclePainter({required this.color});
+
+  final Color color;
+
+  static const double _strokeWidth = 1.5;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = _strokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width / 2) - _strokeWidth / 2;
+    const dashCount = 16;
+    const segmentAngle = (2 * math.pi) / dashCount;
+    const dashFraction = 0.55;
+    const dashAngle = segmentAngle * dashFraction;
+
+    for (int i = 0; i < dashCount; i++) {
+      final startAngle = i * segmentAngle - math.pi / 2;
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        startAngle,
+        dashAngle,
+        false,
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedCirclePainter old) => old.color != color;
+}
+
+// ── Shared sub-widgets ─────────────────────────────────────────────────────
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel({required this.label, required this.c});
+
+  final String label;
+  final CustomColorScheme c;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: TextStyle(
+        color: c.textTertiary,
+        fontWeight: FontWeight.w700,
+        fontSize: 11,
+        letterSpacing: 1.1,
+      ),
+    );
+  }
+}
+
+class _OutlineInput extends StatelessWidget {
+  const _OutlineInput({
+    required this.controller,
+    required this.hint,
+    required this.c,
+    this.keyboardType,
+    this.textCapitalization = TextCapitalization.none,
   });
 
-  final String title;
-  final String value;
+  final TextEditingController controller;
+  final String hint;
+  final CustomColorScheme c;
+  final TextInputType? keyboardType;
+  final TextCapitalization textCapitalization;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      keyboardType: keyboardType,
+      textCapitalization: textCapitalization,
+      style: TextStyle(color: c.textPrimary),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(color: c.inputHint),
+        filled: true,
+        fillColor: c.inputBackground,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 14,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: c.inputBorder),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: c.inputBorder),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: c.brandPrimary, width: 1.5),
+        ),
+      ),
+    );
+  }
+}
+
+class _BowTypeDropdown extends StatelessWidget {
+  const _BowTypeDropdown({
+    required this.value,
+    required this.labels,
+    required this.onChanged,
+    required this.c,
+  });
+
+  final BowType value;
+  final Map<BowType, String> labels;
+  final ValueChanged<BowType?> onChanged;
+  final CustomColorScheme c;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE7EAF0)),
+        color: c.inputBackground,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: c.inputBorder),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: const TextStyle(color: Color(0xFF7C8AA5))),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
-          ),
-        ],
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<BowType>(
+          value: value,
+          dropdownColor: c.surface,
+          icon: Icon(Icons.expand_more_rounded, color: c.textSecondary),
+          isExpanded: true,
+          items: BowType.values
+              .map(
+                (type) => DropdownMenuItem(
+                  value: type,
+                  child: Text(
+                    labels[type] ?? type.name,
+                    style: TextStyle(color: c.textPrimary),
+                  ),
+                ),
+              )
+              .toList(),
+          onChanged: onChanged,
+        ),
       ),
     );
   }

@@ -29,6 +29,10 @@ abstract interface class AuthServiceInterface {
   Future<AuthUserModel?> reloadCurrentUser();
 
   Future<void> signOut();
+
+  Future<void> updateEmail(String newEmail);
+
+  Future<void> updatePassword(String newPassword);
 }
 
 class AuthService implements AuthServiceInterface {
@@ -140,4 +144,18 @@ class AuthService implements AuthServiceInterface {
 
   @override
   Future<void> signOut() => firebaseAuth.signOut();
+
+  @override
+  Future<void> updateEmail(String newEmail) async {
+    final user = firebaseAuth.currentUser;
+    if (user == null) throw FirebaseAuthException(code: 'no-current-user');
+    await user.verifyBeforeUpdateEmail(newEmail);
+  }
+
+  @override
+  Future<void> updatePassword(String newPassword) async {
+    final user = firebaseAuth.currentUser;
+    if (user == null) throw FirebaseAuthException(code: 'no-current-user');
+    await user.updatePassword(newPassword);
+  }
 }

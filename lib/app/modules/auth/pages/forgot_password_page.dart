@@ -66,9 +66,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: _navigateBack),
-        title: const Text(
-          'Recuperação de Conta',
-          style: TextStyle(
+        title: Text(
+          LocaleKeys.modules_auth_forgot_password_account_recovery_title.tr(),
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Color(0xFF1A2030),
@@ -112,7 +112,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 const SizedBox(height: 16),
                 TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(hintText: 'E-mail'),
+                  decoration: InputDecoration(hintText: LocaleKeys.modules_auth_login_email_label.tr()),
                 ),
                 const SizedBox(height: 16),
                 FilledButton(

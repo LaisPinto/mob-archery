@@ -6,7 +6,13 @@
         "subtitle": "Entre para manter seu treino focado e pronto para competição.",
         "email_label": "E-mail",
         "password_label": "Senha",
-        "button": "Entrar"
+        "button": "Entrar",
+        "tagline": "Treino de elite para arqueiros",
+        "no_account_label": "Não tem uma conta?",
+        "create_account_link": "Criar conta",
+        "or_continue_with": "ou continue com",
+        "accessibility_label": "Acessibilidade: ",
+        "accessibility_hint": "ative o modo acessível a qualquer momento nas configurações."
       },
       "register": {
         "title": "Crie sua conta",
@@ -17,7 +23,16 @@
         "back_to_login": "Voltar para entrar",
         "password_hint": "Use pelo menos 8 caracteres com letras e numeros",
         "terms_label": "Eu aceito os Termos de Uso e a Politica de Privacidade.",
-        "create_button": "Criar minha conta"
+        "create_button": "Criar minha conta",
+        "join_title": "Junte-se à Mob Archery",
+        "join_subtitle": "Preencha os dados abaixo para começar sua jornada no tiro com arco.",
+        "discipline_label": "Modalidade",
+        "discipline_default": "Arquearia",
+        "terms_accept_prefix": "Li e aceito os ",
+        "terms_of_use": "Termos de Uso",
+        "terms_and": " e a ",
+        "privacy_policy": "Política de Privacidade",
+        "terms_error": "Aceite os termos para continuar."
       },
       "forgot_password": {
         "title": "Recuperar senha",
@@ -27,7 +42,8 @@
         "page_title": "Esqueceu sua senha?",
         "description": "Nao se preocupe, acontece com os melhores arqueiros. Insira seu e-mail abaixo e enviaremos as instrucoes para redefinir sua senha.",
         "email_section_label": "E-MAIL CADASTRADO",
-        "send_link_button": "Enviar Link de Recuperacao"
+        "send_link_button": "Enviar Link de Recuperacao",
+        "account_recovery_title": "Recuperação de Conta"
       },
       "verification": {
         "title": "Verifique seu e-mail",
@@ -37,7 +53,9 @@
         "sent_message": "Enviamos um link de verificacao para o seu endereco de e-mail cadastrado. Por favor, verifique sua caixa de entrada.",
         "back_to_login": "Voltar ao login",
         "not_received": "Nao recebeu o e-mail?",
-        "resend_link": "Reenviar link"
+        "resend_link": "Reenviar link",
+        "email_sent_to": "E-mail enviado para {}",
+        "open_email_app": "Abrir app de e-mail"
       },
       "reset_password": {
         "title": "Redefinir senha",
@@ -48,7 +66,36 @@
         "description": "Sua nova senha deve ser unica para proteger sua conta de arqueiro.",
         "strength_label": "Forca da senha",
         "submit_button": "REDEFINIR SENHA",
-        "cancel_button": "Cancelar e voltar ao login"
+        "cancel_button": "Cancelar e voltar ao login",
+        "new_password_label": "Nova senha",
+        "confirm_password_label": "Confirme a nova senha",
+        "req_min_chars": "Mínimo de 8 caracteres",
+        "req_uppercase": "Pelo menos uma letra maiúscula",
+        "req_special_char": "Um caractere especial (@, #, !, %)",
+        "error_passwords_mismatch": "As senhas não coincidem."
+      },
+      "validation": {
+        "name_required": "Nome obrigatório.",
+        "name_min_chars": "O nome deve ter pelo menos 2 caracteres.",
+        "email_required": "E-mail obrigatório.",
+        "email_invalid": "Informe um endereço de e-mail válido.",
+        "password_required": "Senha obrigatória.",
+        "password_min_chars": "A senha deve ter pelo menos 8 caracteres.",
+        "passwords_mismatch": "As senhas não coincidem."
+      },
+      "action": {
+        "login_success": "Login realizado com sucesso.",
+        "login_failed": "Falha no login.",
+        "register_success": "Conta criada. Verifique seu e-mail para continuar.",
+        "register_failed": "Não foi possível criar a conta.",
+        "reset_email_sent": "E-mail de redefinição de senha enviado.",
+        "reset_email_failed": "Não foi possível enviar o e-mail de redefinição.",
+        "verification_resent": "E-mail de verificação reenviado.",
+        "verification_failed": "Não foi possível enviar o e-mail de verificação.",
+        "password_updated": "Senha atualizada com sucesso.",
+        "password_update_failed": "Não foi possível atualizar a senha.",
+        "firebase_not_configured": "Firebase não está configurado.",
+        "user_reload_failed": "Não foi possível atualizar os dados do usuário."
       },
       "logout_button": "Sair"
     },

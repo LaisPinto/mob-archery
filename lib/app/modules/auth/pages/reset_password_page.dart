@@ -98,21 +98,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               const SizedBox(height: 24),
               TextField(
                 controller: actionCodeController,
-                decoration: const InputDecoration(hintText: 'Codigo de acao'),
+                decoration: InputDecoration(hintText: LocaleKeys.modules_auth_reset_password_code_label.tr()),
               ),
               const SizedBox(height: 14),
               TextField(
                 controller: passwordController,
                 obscureText: true,
                 onChanged: (_) => setState(() {}),
-                decoration: const InputDecoration(hintText: 'Nova senha'),
+                decoration: InputDecoration(hintText: LocaleKeys.modules_auth_reset_password_new_password_label.tr()),
               ),
               const SizedBox(height: 14),
               TextField(
                 controller: confirmPasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: 'Confirme a nova senha',
+                decoration: InputDecoration(
+                  hintText: LocaleKeys.modules_auth_reset_password_confirm_password_label.tr(),
                 ),
               ),
               const SizedBox(height: 18),
@@ -155,15 +155,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     const SizedBox(height: 14),
                     _requirement(
                       password.length >= 8,
-                      'Minimo de 8 caracteres',
+                      LocaleKeys.modules_auth_reset_password_req_min_chars.tr(),
                     ),
                     _requirement(
                       RegExp(r'[A-Z]').hasMatch(password),
-                      'Pelo menos uma letra maiuscula',
+                      LocaleKeys.modules_auth_reset_password_req_uppercase.tr(),
                     ),
                     _requirement(
                       RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(password),
-                      'Um caractere especial (@, #, !, %)',
+                      LocaleKeys.modules_auth_reset_password_req_special_char.tr(),
                     ),
                   ],
                 ),
@@ -176,7 +176,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         if (passwordController.text !=
                             confirmPasswordController.text) {
                           setState(() {
-                            localErrorMessage = 'As senhas nao coincidem.';
+                            localErrorMessage = LocaleKeys.modules_auth_reset_password_error_passwords_mismatch.tr();
                           });
                           return;
                         }

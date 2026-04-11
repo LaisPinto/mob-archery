@@ -22,7 +22,13 @@ class CodegenLoader extends AssetLoader{
         "subtitle": "Sign in to keep your training focused and competition-ready.",
         "email_label": "Email",
         "password_label": "Password",
-        "button": "Sign in"
+        "button": "Sign in",
+        "tagline": "Elite training for archers",
+        "no_account_label": "Don't have an account?",
+        "create_account_link": "Create account",
+        "or_continue_with": "or continue with",
+        "accessibility_label": "Accessibility: ",
+        "accessibility_hint": "enable accessible mode at any time in settings."
       },
       "register": {
         "title": "Create your account",
@@ -33,7 +39,16 @@ class CodegenLoader extends AssetLoader{
         "back_to_login": "Back to sign in",
         "password_hint": "Use at least 8 characters with letters and numbers",
         "terms_label": "I accept the Terms of Use and Privacy Policy.",
-        "create_button": "Create my account"
+        "create_button": "Create my account",
+        "join_title": "Join Mob Archery",
+        "join_subtitle": "Fill in the details below to start your archery journey.",
+        "discipline_label": "Discipline",
+        "discipline_default": "Archery",
+        "terms_accept_prefix": "I have read and accept the ",
+        "terms_of_use": "Terms of Use",
+        "terms_and": " and the ",
+        "privacy_policy": "Privacy Policy",
+        "terms_error": "Please accept the terms to continue."
       },
       "forgot_password": {
         "title": "Recover password",
@@ -43,7 +58,8 @@ class CodegenLoader extends AssetLoader{
         "page_title": "Forgot your password?",
         "description": "Don't worry, it happens to the best archers. Enter your email below and we'll send you instructions to reset your password.",
         "email_section_label": "REGISTERED EMAIL",
-        "send_link_button": "Send Recovery Link"
+        "send_link_button": "Send Recovery Link",
+        "account_recovery_title": "Account Recovery"
       },
       "verification": {
         "title": "Verify your email",
@@ -53,7 +69,9 @@ class CodegenLoader extends AssetLoader{
         "sent_message": "We sent a verification link to your registered email address. Please check your inbox.",
         "back_to_login": "Back to login",
         "not_received": "Didn't receive the email?",
-        "resend_link": "Resend link"
+        "resend_link": "Resend link",
+        "email_sent_to": "Email sent to {}",
+        "open_email_app": "Open email app"
       },
       "reset_password": {
         "title": "Reset password",
@@ -64,7 +82,36 @@ class CodegenLoader extends AssetLoader{
         "description": "Your new password must be unique to protect your archer account.",
         "strength_label": "Password strength",
         "submit_button": "RESET PASSWORD",
-        "cancel_button": "Cancel and return to login"
+        "cancel_button": "Cancel and return to login",
+        "new_password_label": "New password",
+        "confirm_password_label": "Confirm new password",
+        "req_min_chars": "Minimum 8 characters",
+        "req_uppercase": "At least one uppercase letter",
+        "req_special_char": "One special character (@, #, !, %)",
+        "error_passwords_mismatch": "Passwords do not match."
+      },
+      "validation": {
+        "name_required": "Name is required.",
+        "name_min_chars": "Name must contain at least 2 characters.",
+        "email_required": "Email is required.",
+        "email_invalid": "Enter a valid email address.",
+        "password_required": "Password is required.",
+        "password_min_chars": "Password must contain at least 8 characters.",
+        "passwords_mismatch": "Passwords do not match."
+      },
+      "action": {
+        "login_success": "Login successful.",
+        "login_failed": "Login failed.",
+        "register_success": "Account created. Verify your email to continue.",
+        "register_failed": "Unable to create the account.",
+        "reset_email_sent": "Password reset email sent.",
+        "reset_email_failed": "Unable to send the reset email.",
+        "verification_resent": "Verification email sent again.",
+        "verification_failed": "Unable to send the verification email.",
+        "password_updated": "Password updated successfully.",
+        "password_update_failed": "Unable to update the password.",
+        "firebase_not_configured": "Firebase is not configured.",
+        "user_reload_failed": "Unable to refresh the current user."
       },
       "logout_button": "Sign out"
     },
@@ -263,7 +310,13 @@ static const Map<String,dynamic> _es_ES = {
         "subtitle": "Inicia sesión para mantener tu entrenamiento enfocado y listo para competir.",
         "email_label": "Correo electrónico",
         "password_label": "Contraseña",
-        "button": "Iniciar sesión"
+        "button": "Iniciar sesión",
+        "tagline": "Entrenamiento de élite para arqueros",
+        "no_account_label": "¿No tienes una cuenta?",
+        "create_account_link": "Crear cuenta",
+        "or_continue_with": "o continúa con",
+        "accessibility_label": "Accesibilidad: ",
+        "accessibility_hint": "activa el modo accesible en cualquier momento en la configuración."
       },
       "register": {
         "title": "Crea tu cuenta",
@@ -274,7 +327,16 @@ static const Map<String,dynamic> _es_ES = {
         "back_to_login": "Volver a iniciar sesión",
         "password_hint": "Usa al menos 8 caracteres con letras y números",
         "terms_label": "Acepto los Términos de uso y la Política de privacidad.",
-        "create_button": "Crear mi cuenta"
+        "create_button": "Crear mi cuenta",
+        "join_title": "Únete a Mob Archery",
+        "join_subtitle": "Rellena los datos a continuación para comenzar tu trayectoria en el tiro con arco.",
+        "discipline_label": "Modalidad",
+        "discipline_default": "Arquearia",
+        "terms_accept_prefix": "He leído y acepto los ",
+        "terms_of_use": "Términos de Uso",
+        "terms_and": " y la ",
+        "privacy_policy": "Política de Privacidad",
+        "terms_error": "Acepta los términos para continuar."
       },
       "forgot_password": {
         "title": "Recuperar contraseña",
@@ -284,7 +346,8 @@ static const Map<String,dynamic> _es_ES = {
         "page_title": "¿Olvidaste tu contraseña?",
         "description": "No te preocupes, le pasa a los mejores arqueros. Introduce tu correo a continuación y te enviaremos instrucciones para restablecer tu contraseña.",
         "email_section_label": "CORREO REGISTRADO",
-        "send_link_button": "Enviar enlace de recuperación"
+        "send_link_button": "Enviar enlace de recuperación",
+        "account_recovery_title": "Recuperación de cuenta"
       },
       "verification": {
         "title": "Verifica tu correo",
@@ -294,7 +357,9 @@ static const Map<String,dynamic> _es_ES = {
         "sent_message": "Enviamos un enlace de verificación a tu dirección de correo electrónico registrada. Por favor, revisa tu bandeja de entrada.",
         "back_to_login": "Volver al inicio de sesión",
         "not_received": "¿No recibiste el correo?",
-        "resend_link": "Reenviar enlace"
+        "resend_link": "Reenviar enlace",
+        "email_sent_to": "Correo enviado a {}",
+        "open_email_app": "Abrir app de correo"
       },
       "reset_password": {
         "title": "Restablecer contraseña",
@@ -305,7 +370,36 @@ static const Map<String,dynamic> _es_ES = {
         "description": "Tu nueva contraseña debe ser única para proteger tu cuenta de arquero.",
         "strength_label": "Fuerza de la contraseña",
         "submit_button": "RESTABLECER CONTRASEÑA",
-        "cancel_button": "Cancelar y volver al inicio de sesión"
+        "cancel_button": "Cancelar y volver al inicio de sesión",
+        "new_password_label": "Nueva contraseña",
+        "confirm_password_label": "Confirmar nueva contraseña",
+        "req_min_chars": "Mínimo 8 caracteres",
+        "req_uppercase": "Al menos una letra mayúscula",
+        "req_special_char": "Un carácter especial (@, #, !, %)",
+        "error_passwords_mismatch": "Las contraseñas no coinciden."
+      },
+      "validation": {
+        "name_required": "El nombre es obligatorio.",
+        "name_min_chars": "El nombre debe tener al menos 2 caracteres.",
+        "email_required": "El correo electrónico es obligatorio.",
+        "email_invalid": "Introduce una dirección de correo electrónico válida.",
+        "password_required": "La contraseña es obligatoria.",
+        "password_min_chars": "La contraseña debe tener al menos 8 caracteres.",
+        "passwords_mismatch": "Las contraseñas no coinciden."
+      },
+      "action": {
+        "login_success": "Inicio de sesión exitoso.",
+        "login_failed": "Error al iniciar sesión.",
+        "register_success": "Cuenta creada. Verifica tu correo para continuar.",
+        "register_failed": "No se pudo crear la cuenta.",
+        "reset_email_sent": "Correo de restablecimiento de contraseña enviado.",
+        "reset_email_failed": "No se pudo enviar el correo de restablecimiento.",
+        "verification_resent": "Correo de verificación reenviado.",
+        "verification_failed": "No se pudo enviar el correo de verificación.",
+        "password_updated": "Contraseña actualizada exitosamente.",
+        "password_update_failed": "No se pudo actualizar la contraseña.",
+        "firebase_not_configured": "Firebase no está configurado.",
+        "user_reload_failed": "No se pudo actualizar los datos del usuario."
       },
       "logout_button": "Cerrar sesión"
     },
@@ -504,7 +598,13 @@ static const Map<String,dynamic> _pt_BR = {
         "subtitle": "Entre para manter seu treino focado e pronto para competição.",
         "email_label": "E-mail",
         "password_label": "Senha",
-        "button": "Entrar"
+        "button": "Entrar",
+        "tagline": "Treino de elite para arqueiros",
+        "no_account_label": "Não tem uma conta?",
+        "create_account_link": "Criar conta",
+        "or_continue_with": "ou continue com",
+        "accessibility_label": "Acessibilidade: ",
+        "accessibility_hint": "ative o modo acessível a qualquer momento nas configurações."
       },
       "register": {
         "title": "Crie sua conta",
@@ -515,7 +615,16 @@ static const Map<String,dynamic> _pt_BR = {
         "back_to_login": "Voltar para entrar",
         "password_hint": "Use pelo menos 8 caracteres com letras e numeros",
         "terms_label": "Eu aceito os Termos de Uso e a Politica de Privacidade.",
-        "create_button": "Criar minha conta"
+        "create_button": "Criar minha conta",
+        "join_title": "Junte-se à Mob Archery",
+        "join_subtitle": "Preencha os dados abaixo para começar sua jornada no tiro com arco.",
+        "discipline_label": "Modalidade",
+        "discipline_default": "Arquearia",
+        "terms_accept_prefix": "Li e aceito os ",
+        "terms_of_use": "Termos de Uso",
+        "terms_and": " e a ",
+        "privacy_policy": "Política de Privacidade",
+        "terms_error": "Aceite os termos para continuar."
       },
       "forgot_password": {
         "title": "Recuperar senha",
@@ -525,7 +634,8 @@ static const Map<String,dynamic> _pt_BR = {
         "page_title": "Esqueceu sua senha?",
         "description": "Nao se preocupe, acontece com os melhores arqueiros. Insira seu e-mail abaixo e enviaremos as instrucoes para redefinir sua senha.",
         "email_section_label": "E-MAIL CADASTRADO",
-        "send_link_button": "Enviar Link de Recuperacao"
+        "send_link_button": "Enviar Link de Recuperacao",
+        "account_recovery_title": "Recuperação de Conta"
       },
       "verification": {
         "title": "Verifique seu e-mail",
@@ -535,7 +645,9 @@ static const Map<String,dynamic> _pt_BR = {
         "sent_message": "Enviamos um link de verificacao para o seu endereco de e-mail cadastrado. Por favor, verifique sua caixa de entrada.",
         "back_to_login": "Voltar ao login",
         "not_received": "Nao recebeu o e-mail?",
-        "resend_link": "Reenviar link"
+        "resend_link": "Reenviar link",
+        "email_sent_to": "E-mail enviado para {}",
+        "open_email_app": "Abrir app de e-mail"
       },
       "reset_password": {
         "title": "Redefinir senha",
@@ -546,7 +658,36 @@ static const Map<String,dynamic> _pt_BR = {
         "description": "Sua nova senha deve ser unica para proteger sua conta de arqueiro.",
         "strength_label": "Forca da senha",
         "submit_button": "REDEFINIR SENHA",
-        "cancel_button": "Cancelar e voltar ao login"
+        "cancel_button": "Cancelar e voltar ao login",
+        "new_password_label": "Nova senha",
+        "confirm_password_label": "Confirme a nova senha",
+        "req_min_chars": "Mínimo de 8 caracteres",
+        "req_uppercase": "Pelo menos uma letra maiúscula",
+        "req_special_char": "Um caractere especial (@, #, !, %)",
+        "error_passwords_mismatch": "As senhas não coincidem."
+      },
+      "validation": {
+        "name_required": "Nome obrigatório.",
+        "name_min_chars": "O nome deve ter pelo menos 2 caracteres.",
+        "email_required": "E-mail obrigatório.",
+        "email_invalid": "Informe um endereço de e-mail válido.",
+        "password_required": "Senha obrigatória.",
+        "password_min_chars": "A senha deve ter pelo menos 8 caracteres.",
+        "passwords_mismatch": "As senhas não coincidem."
+      },
+      "action": {
+        "login_success": "Login realizado com sucesso.",
+        "login_failed": "Falha no login.",
+        "register_success": "Conta criada. Verifique seu e-mail para continuar.",
+        "register_failed": "Não foi possível criar a conta.",
+        "reset_email_sent": "E-mail de redefinição de senha enviado.",
+        "reset_email_failed": "Não foi possível enviar o e-mail de redefinição.",
+        "verification_resent": "E-mail de verificação reenviado.",
+        "verification_failed": "Não foi possível enviar o e-mail de verificação.",
+        "password_updated": "Senha atualizada com sucesso.",
+        "password_update_failed": "Não foi possível atualizar a senha.",
+        "firebase_not_configured": "Firebase não está configurado.",
+        "user_reload_failed": "Não foi possível atualizar os dados do usuário."
       },
       "logout_button": "Sair"
     },

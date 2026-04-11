@@ -189,7 +189,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                                   ),
                                 ),
                                 child: Text(
-                                  'E-mail enviado para $email',
+                                  LocaleKeys.modules_auth_verification_email_sent_to.tr(args: [email]),
                                   style: const TextStyle(
                                     color: Color(0xFF64748B),
                                     fontSize: 13,
@@ -220,9 +220,9 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                             ),
                             elevation: 0,
                           ),
-                          child: const Text(
-                            'Abrir app de e-mail',
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.modules_auth_verification_open_email_app.tr(),
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),

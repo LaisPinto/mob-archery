@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _authState = Modular.get<AuthState>();
     _nameController = TextEditingController();
     _emailController = TextEditingController();
-    _disciplineController = TextEditingController(text: 'Arquearia');
+    _disciplineController = TextEditingController(text: LocaleKeys.modules_auth_register_discipline_default.tr());
     _passwordController = TextEditingController();
 
     _errorReactionDisposer = reaction((_) => _authState.errorMessage, (
@@ -91,9 +91,9 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: _navigateBack),
-        title: const Text(
-          'Criar conta',
-          style: TextStyle(
+        title: Text(
+          LocaleKeys.modules_auth_register_button.tr(),
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Color(0xFF1A2030),
@@ -114,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Junte-se à Mob Archery',
+                        LocaleKeys.modules_auth_register_join_title.tr(),
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(
                               fontWeight: FontWeight.w700,
@@ -125,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Preencha os dados abaixo para começar sua jornada no tiro com arco.',
+                        LocaleKeys.modules_auth_register_join_subtitle.tr(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: const Color(0xFF475569),
                           fontWeight: FontWeight.w400,
@@ -138,25 +138,25 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 16),
                   TextField(
                     controller: _nameController,
-                    decoration: _inputDecoration('Nome'),
+                    decoration: _inputDecoration(LocaleKeys.modules_auth_register_name_label.tr()),
                   ),
                   const SizedBox(height: 24),
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: _inputDecoration('E-mail'),
+                    decoration: _inputDecoration(LocaleKeys.modules_auth_login_email_label.tr()),
                   ),
                   const SizedBox(height: 24),
                   TextField(
                     controller: _disciplineController,
-                    decoration: _inputDecoration('Modalidade'),
+                    decoration: _inputDecoration(LocaleKeys.modules_auth_register_discipline_label.tr()),
                   ),
                   const SizedBox(height: 24),
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
                     onChanged: (_) => setState(() {}),
-                    decoration: _inputDecoration('Senha'),
+                    decoration: _inputDecoration(LocaleKeys.modules_auth_login_password_label.tr()),
                   ),
                   const SizedBox(height: 24),
                   Row(
@@ -226,19 +226,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                   height: 1.5,
                                   fontSize: 14,
                                 ),
-                            children: const [
-                              TextSpan(text: 'Li e aceito os '),
+                            children: [
+                              TextSpan(text: LocaleKeys.modules_auth_register_terms_accept_prefix.tr()),
                               TextSpan(
-                                text: 'Termos de Uso',
-                                style: TextStyle(
+                                text: LocaleKeys.modules_auth_register_terms_of_use.tr(),
+                                style: const TextStyle(
                                   color: Color(0xFFFF5C00),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              TextSpan(text: ' e a '),
+                              TextSpan(text: LocaleKeys.modules_auth_register_terms_and.tr()),
                               TextSpan(
-                                text: 'Política de Privacidade',
-                                style: TextStyle(
+                                text: LocaleKeys.modules_auth_register_privacy_policy.tr(),
+                                style: const TextStyle(
                                   color: Color(0xFFFF5C00),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -306,7 +306,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (!_acceptedTerms) {
       setState(() {
-        _localErrorMessage = 'Aceite os termos para continuar.';
+        _localErrorMessage = LocaleKeys.modules_auth_register_terms_error.tr();
       });
       return;
     }

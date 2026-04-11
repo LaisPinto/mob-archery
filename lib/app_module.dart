@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mob_archery/accessibility/accessibility_module.dart';
-import 'package:mob_archery/accessibility/services/accessibility_feedback_service.dart';
-import 'package:mob_archery/accessibility/stores/accessibility_action.dart';
-import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
+import 'package:mob_archery/app/modules/accessibility/accessibility_module.dart';
+import 'package:mob_archery/app/modules/accessibility/services/accessibility_feedback_service.dart';
+import 'package:mob_archery/app/modules/accessibility/stores/accessibility_action.dart';
+import 'package:mob_archery/app/modules/accessibility/stores/accessibility_state.dart';
 import 'package:mob_archery/app/modules/auth/auth_module.dart';
 import 'package:mob_archery/app/modules/auth/services/auth_service.dart'
     show AuthService;

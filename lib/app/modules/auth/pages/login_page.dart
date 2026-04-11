@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Treino de elite para arqueiros',
+                          LocaleKeys.modules_auth_login_tagline.tr(),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
                                 color: c.brandPrimaryDark,
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Não tem uma conta?',
+                          LocaleKeys.modules_auth_login_no_account_label.tr(),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(color: c.textSecondary),
                         ),
@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          child: const Text('Criar conta'),
+                          child: Text(LocaleKeys.modules_auth_login_create_account_link.tr()),
                         ),
                       ],
                     ),
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
-                            'ou continue com',
+                            LocaleKeys.modules_auth_login_or_continue_with.tr(),
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(color: c.textSecondary),
                           ),
@@ -261,15 +261,14 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                 children: [
                                   TextSpan(
-                                    text: 'Acessibilidade: ',
+                                    text: LocaleKeys.modules_auth_login_accessibility_label.tr(),
                                     style: TextStyle(
                                       color: c.brandPrimaryDark,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   TextSpan(
-                                    text:
-                                        'ative o modo acessível a qualquer momento nas configurações.',
+                                    text: LocaleKeys.modules_auth_login_accessibility_hint.tr(),
                                     style: TextStyle(
                                       color: c.textPrimary,
                                       fontWeight: FontWeight.w700,

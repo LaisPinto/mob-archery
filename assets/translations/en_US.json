@@ -6,7 +6,13 @@
         "subtitle": "Sign in to keep your training focused and competition-ready.",
         "email_label": "Email",
         "password_label": "Password",
-        "button": "Sign in"
+        "button": "Sign in",
+        "tagline": "Elite training for archers",
+        "no_account_label": "Don't have an account?",
+        "create_account_link": "Create account",
+        "or_continue_with": "or continue with",
+        "accessibility_label": "Accessibility: ",
+        "accessibility_hint": "enable accessible mode at any time in settings."
       },
       "register": {
         "title": "Create your account",
@@ -17,7 +23,16 @@
         "back_to_login": "Back to sign in",
         "password_hint": "Use at least 8 characters with letters and numbers",
         "terms_label": "I accept the Terms of Use and Privacy Policy.",
-        "create_button": "Create my account"
+        "create_button": "Create my account",
+        "join_title": "Join Mob Archery",
+        "join_subtitle": "Fill in the details below to start your archery journey.",
+        "discipline_label": "Discipline",
+        "discipline_default": "Archery",
+        "terms_accept_prefix": "I have read and accept the ",
+        "terms_of_use": "Terms of Use",
+        "terms_and": " and the ",
+        "privacy_policy": "Privacy Policy",
+        "terms_error": "Please accept the terms to continue."
       },
       "forgot_password": {
         "title": "Recover password",
@@ -27,7 +42,8 @@
         "page_title": "Forgot your password?",
         "description": "Don't worry, it happens to the best archers. Enter your email below and we'll send you instructions to reset your password.",
         "email_section_label": "REGISTERED EMAIL",
-        "send_link_button": "Send Recovery Link"
+        "send_link_button": "Send Recovery Link",
+        "account_recovery_title": "Account Recovery"
       },
       "verification": {
         "title": "Verify your email",
@@ -37,7 +53,9 @@
         "sent_message": "We sent a verification link to your registered email address. Please check your inbox.",
         "back_to_login": "Back to login",
         "not_received": "Didn't receive the email?",
-        "resend_link": "Resend link"
+        "resend_link": "Resend link",
+        "email_sent_to": "Email sent to {}",
+        "open_email_app": "Open email app"
       },
       "reset_password": {
         "title": "Reset password",
@@ -48,7 +66,36 @@
         "description": "Your new password must be unique to protect your archer account.",
         "strength_label": "Password strength",
         "submit_button": "RESET PASSWORD",
-        "cancel_button": "Cancel and return to login"
+        "cancel_button": "Cancel and return to login",
+        "new_password_label": "New password",
+        "confirm_password_label": "Confirm new password",
+        "req_min_chars": "Minimum 8 characters",
+        "req_uppercase": "At least one uppercase letter",
+        "req_special_char": "One special character (@, #, !, %)",
+        "error_passwords_mismatch": "Passwords do not match."
+      },
+      "validation": {
+        "name_required": "Name is required.",
+        "name_min_chars": "Name must contain at least 2 characters.",
+        "email_required": "Email is required.",
+        "email_invalid": "Enter a valid email address.",
+        "password_required": "Password is required.",
+        "password_min_chars": "Password must contain at least 8 characters.",
+        "passwords_mismatch": "Passwords do not match."
+      },
+      "action": {
+        "login_success": "Login successful.",
+        "login_failed": "Login failed.",
+        "register_success": "Account created. Verify your email to continue.",
+        "register_failed": "Unable to create the account.",
+        "reset_email_sent": "Password reset email sent.",
+        "reset_email_failed": "Unable to send the reset email.",
+        "verification_resent": "Verification email sent again.",
+        "verification_failed": "Unable to send the verification email.",
+        "password_updated": "Password updated successfully.",
+        "password_update_failed": "Unable to update the password.",
+        "firebase_not_configured": "Firebase is not configured.",
+        "user_reload_failed": "Unable to refresh the current user."
       },
       "logout_button": "Sign out"
     },

@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mob_archery/accessibility/pages/accessibility_page.dart';
+import 'package:mob_archery/app/modules/accessibility/pages/accessibility_page.dart';
 
 class AccessibilityModule extends Module {
   @override

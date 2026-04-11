@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mob_archery/translations/locale_keys.g.dart';
 import 'package:mobx/mobx.dart';
 import '../enums/auth_status.dart';
 import '../models/auth_user_model.dart';
@@ -43,7 +45,7 @@ abstract class AuthActionBase with Store {
     try {
       authSubscription = authService.authStateChanges().listen(_onAuthChanged);
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     }
@@ -108,11 +110,11 @@ abstract class AuthActionBase with Store {
         email: email.trim(),
         password: password,
       );
-      _state.infoMessage = 'Login successful.';
+      _state.infoMessage = LocaleKeys.modules_auth_action_login_success.tr();
     } on FirebaseAuthException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Login failed.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_login_failed.tr();
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     } finally {
@@ -163,12 +165,12 @@ abstract class AuthActionBase with Store {
       );
 
       await authService.sendEmailVerification();
-      _state.infoMessage = 'Account created. Verify your email to continue.';
+      _state.infoMessage = LocaleKeys.modules_auth_action_register_success.tr();
     } on FirebaseAuthException catch (exception) {
       _state.errorMessage =
-          exception.message ?? 'Unable to create the account.';
+          exception.message ?? LocaleKeys.modules_auth_action_register_failed.tr();
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     } finally {
@@ -189,12 +191,12 @@ abstract class AuthActionBase with Store {
     _state.isLoading = true;
     try {
       await authService.sendPasswordResetEmail(email.trim());
-      _state.infoMessage = 'Password reset email sent.';
+      _state.infoMessage = LocaleKeys.modules_auth_action_reset_email_sent.tr();
     } on FirebaseAuthException catch (exception) {
       _state.errorMessage =
-          exception.message ?? 'Unable to send the reset email.';
+          exception.message ?? LocaleKeys.modules_auth_action_reset_email_failed.tr();
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     } finally {
@@ -208,12 +210,12 @@ abstract class AuthActionBase with Store {
     _state.isLoading = true;
     try {
       await authService.sendEmailVerification();
-      _state.infoMessage = 'Verification email sent again.';
+      _state.infoMessage = LocaleKeys.modules_auth_action_verification_resent.tr();
     } on FirebaseAuthException catch (exception) {
       _state.errorMessage =
-          exception.message ?? 'Unable to send the verification email.';
+          exception.message ?? LocaleKeys.modules_auth_action_verification_failed.tr();
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     } finally {
@@ -230,9 +232,9 @@ abstract class AuthActionBase with Store {
       await _onAuthChanged(authUser);
     } on FirebaseAuthException catch (exception) {
       _state.errorMessage =
-          exception.message ?? 'Unable to refresh the current user.';
+          exception.message ?? LocaleKeys.modules_auth_action_user_reload_failed.tr();
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     } finally {
@@ -261,12 +263,12 @@ abstract class AuthActionBase with Store {
         actionCode: actionCode,
         newPassword: newPassword,
       );
-      _state.infoMessage = 'Password updated successfully.';
+      _state.infoMessage = LocaleKeys.modules_auth_action_password_updated.tr();
     } on FirebaseAuthException catch (exception) {
       _state.errorMessage =
-          exception.message ?? 'Unable to update the password.';
+          exception.message ?? LocaleKeys.modules_auth_action_password_update_failed.tr();
     } on FirebaseException catch (exception) {
-      _state.errorMessage = exception.message ?? 'Firebase is not configured.';
+      _state.errorMessage = exception.message ?? LocaleKeys.modules_auth_action_firebase_not_configured.tr();
     } catch (exception) {
       _state.errorMessage = exception.toString();
     } finally {

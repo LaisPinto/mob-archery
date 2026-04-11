@@ -6,7 +6,13 @@
         "subtitle": "Inicia sesión para mantener tu entrenamiento enfocado y listo para competir.",
         "email_label": "Correo electrónico",
         "password_label": "Contraseña",
-        "button": "Iniciar sesión"
+        "button": "Iniciar sesión",
+        "tagline": "Entrenamiento de élite para arqueros",
+        "no_account_label": "¿No tienes una cuenta?",
+        "create_account_link": "Crear cuenta",
+        "or_continue_with": "o continúa con",
+        "accessibility_label": "Accesibilidad: ",
+        "accessibility_hint": "activa el modo accesible en cualquier momento en la configuración."
       },
       "register": {
         "title": "Crea tu cuenta",
@@ -17,7 +23,16 @@
         "back_to_login": "Volver a iniciar sesión",
         "password_hint": "Usa al menos 8 caracteres con letras y números",
         "terms_label": "Acepto los Términos de uso y la Política de privacidad.",
-        "create_button": "Crear mi cuenta"
+        "create_button": "Crear mi cuenta",
+        "join_title": "Únete a Mob Archery",
+        "join_subtitle": "Rellena los datos a continuación para comenzar tu trayectoria en el tiro con arco.",
+        "discipline_label": "Modalidad",
+        "discipline_default": "Arquearia",
+        "terms_accept_prefix": "He leído y acepto los ",
+        "terms_of_use": "Términos de Uso",
+        "terms_and": " y la ",
+        "privacy_policy": "Política de Privacidad",
+        "terms_error": "Acepta los términos para continuar."
       },
       "forgot_password": {
         "title": "Recuperar contraseña",
@@ -27,7 +42,8 @@
         "page_title": "¿Olvidaste tu contraseña?",
         "description": "No te preocupes, le pasa a los mejores arqueros. Introduce tu correo a continuación y te enviaremos instrucciones para restablecer tu contraseña.",
         "email_section_label": "CORREO REGISTRADO",
-        "send_link_button": "Enviar enlace de recuperación"
+        "send_link_button": "Enviar enlace de recuperación",
+        "account_recovery_title": "Recuperación de cuenta"
       },
       "verification": {
         "title": "Verifica tu correo",
@@ -37,7 +53,9 @@
         "sent_message": "Enviamos un enlace de verificación a tu dirección de correo electrónico registrada. Por favor, revisa tu bandeja de entrada.",
         "back_to_login": "Volver al inicio de sesión",
         "not_received": "¿No recibiste el correo?",
-        "resend_link": "Reenviar enlace"
+        "resend_link": "Reenviar enlace",
+        "email_sent_to": "Correo enviado a {}",
+        "open_email_app": "Abrir app de correo"
       },
       "reset_password": {
         "title": "Restablecer contraseña",
@@ -48,7 +66,36 @@
         "description": "Tu nueva contraseña debe ser única para proteger tu cuenta de arquero.",
         "strength_label": "Fuerza de la contraseña",
         "submit_button": "RESTABLECER CONTRASEÑA",
-        "cancel_button": "Cancelar y volver al inicio de sesión"
+        "cancel_button": "Cancelar y volver al inicio de sesión",
+        "new_password_label": "Nueva contraseña",
+        "confirm_password_label": "Confirmar nueva contraseña",
+        "req_min_chars": "Mínimo 8 caracteres",
+        "req_uppercase": "Al menos una letra mayúscula",
+        "req_special_char": "Un carácter especial (@, #, !, %)",
+        "error_passwords_mismatch": "Las contraseñas no coinciden."
+      },
+      "validation": {
+        "name_required": "El nombre es obligatorio.",
+        "name_min_chars": "El nombre debe tener al menos 2 caracteres.",
+        "email_required": "El correo electrónico es obligatorio.",
+        "email_invalid": "Introduce una dirección de correo electrónico válida.",
+        "password_required": "La contraseña es obligatoria.",
+        "password_min_chars": "La contraseña debe tener al menos 8 caracteres.",
+        "passwords_mismatch": "Las contraseñas no coinciden."
+      },
+      "action": {
+        "login_success": "Inicio de sesión exitoso.",
+        "login_failed": "Error al iniciar sesión.",
+        "register_success": "Cuenta creada. Verifica tu correo para continuar.",
+        "register_failed": "No se pudo crear la cuenta.",
+        "reset_email_sent": "Correo de restablecimiento de contraseña enviado.",
+        "reset_email_failed": "No se pudo enviar el correo de restablecimiento.",
+        "verification_resent": "Correo de verificación reenviado.",
+        "verification_failed": "No se pudo enviar el correo de verificación.",
+        "password_updated": "Contraseña actualizada exitosamente.",
+        "password_update_failed": "No se pudo actualizar la contraseña.",
+        "firebase_not_configured": "Firebase no está configurado.",
+        "user_reload_failed": "No se pudo actualizar los datos del usuario."
       },
       "logout_button": "Cerrar sesión"
     },

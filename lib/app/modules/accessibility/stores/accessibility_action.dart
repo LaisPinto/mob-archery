@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:mob_archery/accessibility/services/accessibility_feedback_service.dart';
-import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
+import 'package:mob_archery/app/modules/accessibility/services/accessibility_feedback_service.dart';
+import 'package:mob_archery/app/modules/accessibility/stores/accessibility_state.dart';
 
 class AccessibilityAction {
   AccessibilityAction(this.state, this.feedbackService);

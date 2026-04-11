@@ -1,4 +1,4 @@
-import 'package:mob_archery/accessibility/enums/accessibility_preference_type.dart';
+import 'package:mob_archery/app/modules/accessibility/enums/accessibility_preference_type.dart';
 
 class AccessibilityPreferenceModel {
   const AccessibilityPreferenceModel({

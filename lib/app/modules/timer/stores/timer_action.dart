@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
-import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
+import 'package:mob_archery/app/modules/accessibility/stores/accessibility_state.dart';
 import 'package:mob_archery/app/modules/timer/models/timer_config_model.dart';
 import 'package:mob_archery/app/modules/timer/services/timer_feedback_service.dart';
 import 'package:mob_archery/app/modules/timer/stores/timer_state.dart';

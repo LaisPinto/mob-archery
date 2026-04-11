@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
-import 'package:mob_archery/core/theme/app_theme.dart';
+import 'package:mob_archery/app/modules/core/theme/app_theme.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});

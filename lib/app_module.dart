@@ -3,38 +3,42 @@ import 'package:mob_archery/accessibility/accessibility_module.dart';
 import 'package:mob_archery/accessibility/services/accessibility_feedback_service.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_action.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
-import 'package:mob_archery/auth/auth_module.dart';
-import 'package:mob_archery/auth/services/auth_form_service.dart';
-import 'package:mob_archery/auth/stores/auth_action.dart';
-import 'package:mob_archery/auth/stores/auth_state.dart';
-import 'package:mob_archery/home/home_module.dart';
-import 'package:mob_archery/home/pages/launch_page.dart';
-import 'package:mob_archery/home/services/home_summary_service.dart';
-import 'package:mob_archery/home/stores/home_action.dart';
-import 'package:mob_archery/home/stores/home_state.dart';
-import 'package:mob_archery/profile/profile_module.dart';
-import 'package:mob_archery/profile/services/profile_form_service.dart';
-import 'package:mob_archery/profile/stores/profile_action.dart';
-import 'package:mob_archery/profile/stores/profile_state.dart';
-import 'package:mob_archery/services/auth_service.dart';
-import 'package:mob_archery/services/firestore_service.dart';
-import 'package:mob_archery/timer/services/timer_feedback_service.dart';
-import 'package:mob_archery/timer/stores/timer_action.dart';
-import 'package:mob_archery/timer/stores/timer_state.dart';
-import 'package:mob_archery/timer/timer_module.dart';
-import 'package:mob_archery/training/services/training_metrics_service.dart';
-import 'package:mob_archery/training/services/training_report_service.dart';
-import 'package:mob_archery/training/stores/training_action.dart';
-import 'package:mob_archery/training/stores/training_state.dart';
-import 'package:mob_archery/training/training_module.dart';
+import 'package:mob_archery/app/modules/auth/auth_module.dart';
+import 'package:mob_archery/app/modules/auth/services/auth_service.dart'
+    show AuthService;
+import 'package:mob_archery/app/modules/auth/stores/auth_action.dart';
+import 'package:mob_archery/app/modules/auth/stores/auth_state.dart';
+import 'package:mob_archery/app/modules/home/home_module.dart';
+import 'package:mob_archery/app/modules/home/pages/launch_page.dart';
+import 'package:mob_archery/app/modules/home/services/home_summary_service.dart';
+import 'package:mob_archery/app/modules/home/stores/home_action.dart';
+import 'package:mob_archery/app/modules/home/stores/home_state.dart';
+import 'package:mob_archery/app/modules/profile/profile_module.dart';
+import 'package:mob_archery/app/modules/profile/services/profile_form_service.dart';
+import 'package:mob_archery/app/modules/profile/stores/profile_action.dart';
+import 'package:mob_archery/app/modules/profile/stores/profile_state.dart';
+import 'package:mob_archery/app/modules/services/auth_service.dart'
+    as auth_service;
+import 'package:mob_archery/app/modules/services/firestore_service.dart';
+import 'package:mob_archery/app/modules/timer/services/timer_feedback_service.dart';
+import 'package:mob_archery/app/modules/timer/stores/timer_action.dart';
+import 'package:mob_archery/app/modules/timer/stores/timer_state.dart';
+import 'package:mob_archery/app/modules/timer/timer_module.dart';
+import 'package:mob_archery/app/modules/training/services/training_metrics_service.dart';
+import 'package:mob_archery/app/modules/training/services/training_report_service.dart';
+import 'package:mob_archery/app/modules/training/stores/training_action.dart';
+import 'package:mob_archery/app/modules/training/stores/training_state.dart';
+import 'package:mob_archery/app/modules/training/training_module.dart';
 
 class AppModule extends Module {
   @override
   void binds(Injector i) {
     i
-      ..addLazySingleton<AuthServiceInterface>(AuthService.new)
+      ..addLazySingleton<auth_service.AuthServiceInterface>(
+        auth_service.AuthService.new,
+      )
       ..addLazySingleton<FirestoreServiceInterface>(FirestoreService.new)
-      ..addLazySingleton(AuthFormService.new)
+      ..addLazySingleton(AuthService.new)
       ..addLazySingleton(HomeSummaryService.new)
       ..addLazySingleton(TimerFeedbackService.new)
       ..addLazySingleton(TrainingMetricsService.new)
@@ -51,10 +55,9 @@ class AppModule extends Module {
       ..addLazySingleton(AuthState.new)
       ..addLazySingleton(
         () => AuthAction(
-          i.get<AuthState>(),
-          i.get<AuthServiceInterface>(),
+          i.get<auth_service.AuthServiceInterface>(),
           i.get<FirestoreServiceInterface>(),
-          i.get<AuthFormService>(),
+          i.get<AuthService>(),
         ),
       )
       ..addLazySingleton(TimerState.new)
@@ -69,7 +72,7 @@ class AppModule extends Module {
       ..addLazySingleton(
         () => TrainingAction(
           i.get<TrainingState>(),
-          i.get<AuthServiceInterface>(),
+          i.get<auth_service.AuthServiceInterface>(),
           i.get<FirestoreServiceInterface>(),
           i.get<TrainingMetricsService>(),
           i.get<TrainingReportService>(),
@@ -88,7 +91,7 @@ class AppModule extends Module {
         () => ProfileAction(
           i.get<ProfileState>(),
           i.get<AuthState>(),
-          i.get<AuthServiceInterface>(),
+          i.get<auth_service.AuthServiceInterface>(),
           i.get<FirestoreServiceInterface>(),
           i.get<ProfileFormService>(),
         ),

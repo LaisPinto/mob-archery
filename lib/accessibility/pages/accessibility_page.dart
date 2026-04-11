@@ -4,10 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_action.dart';
 import 'package:mob_archery/accessibility/stores/accessibility_state.dart';
-import 'package:mob_archery/core/theme/custom_color_scheme.dart';
-import 'package:mob_archery/core/widgets/app_bottom_navigation.dart';
-import 'package:mob_archery/core/widgets/switch_card_component.dart';
-import 'package:mob_archery/timer/stores/timer_action.dart';
+import 'package:mob_archery/app/modules/core/theme/custom_color_scheme.dart';
+import 'package:mob_archery/app/modules/core/widgets/app_bottom_navigation.dart';
+import 'package:mob_archery/app/modules/core/widgets/switch_card_component.dart';
+import 'package:mob_archery/app/modules/timer/stores/timer_action.dart';
 import 'package:mob_archery/translations/locale_keys.g.dart';
 
 class AccessibilityPage extends StatelessWidget {
